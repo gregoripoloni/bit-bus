@@ -1,7 +1,7 @@
 <script setup>
 	import { ref } from 'vue'
 	import TabMenu from 'primevue/tabmenu'
-	import ItemsList from '../components/ItemsList.vue'
+	import ItemsList from '@/components/ItemsList.vue'
 
 	const items = ref([
 		{ label: 'Processadores e Memórias' },

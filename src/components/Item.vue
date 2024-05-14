@@ -7,7 +7,7 @@
 	<Card class="Item">
 		<template #header>
 			<div class="Item-header">
-				<img class="Item-image" src="../assets/ibm.jpg" />
+				<img class="Item-image" src="@/assets/ibm.jpg" />
 			</div>
 		</template>
 		<template #title>Card title</template>

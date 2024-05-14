@@ -12,17 +12,17 @@ const router = createRouter({
 		{
 			path: '/acervo',
 			name: 'acervo',
-			component:  () => import('../views/AcervoView.vue')
+			component:  () => import('@/views/AcervoView.vue')
 		},
 		{
 			path: '/visitas',
 			name: 'visitas',
-			component:  () => import('../views/VisitasView.vue')
+			component:  () => import('@/views/VisitasView.vue')
 		},
 		{
 			path: '/doacao',
 			name: 'doacao',
-			component:  () => import('../views/DoacaoView.vue')
+			component:  () => import('@/views/DoacaoView.vue')
 		}
 	]
 })

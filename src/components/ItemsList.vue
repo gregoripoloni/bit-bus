@@ -1,5 +1,5 @@
 <script setup>
-	import Item from './Item.vue'
+	import Item from '@/components/Item.vue'
 </script>
 
 <template>

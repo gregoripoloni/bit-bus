@@ -5,8 +5,7 @@
 
 	const items = ref([
 		{
-				url: '/',
-				img: '/src/assets/logo.png'
+				url: '/'
 		},
 		{
 				label: 'Acervo',
@@ -27,8 +26,8 @@
 	<nav class="NavBar">
 		<Menubar class="NavBar-menuBar" :model="items" #item="{ item }">
 				<RouterLink :to="item.url" class="NavBar-menuLink">
-					<img v-if="item.img" :src="item.img" />
-					<span v-if="item.label">{{ item.label }}</span>
+					<img v-if="!item.label" src="@/assets/logo.png" />
+					<span v-else>{{ item.label }}</span>
 				</RouterLink>
 		</Menubar>
 	</nav>

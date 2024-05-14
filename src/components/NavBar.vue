@@ -5,8 +5,12 @@
 
 	const items = ref([
 		{
+				url: '/',
+				img: '/src/assets/logo.png'
+		},
+		{
 				label: 'Acervo',
-				url: '/'
+				url: '/acervo'
 		},
 		{
 				label: 'Visitas',
@@ -23,7 +27,8 @@
 	<nav class="NavBar">
 		<Menubar class="NavBar-menuBar" :model="items" #item="{ item }">
 				<RouterLink :to="item.url" class="NavBar-menuLink">
-					<span>{{ item.label }}</span>
+					<img v-if="item.img" :src="item.img" />
+					<span v-if="item.label">{{ item.label }}</span>
 				</RouterLink>
 		</Menubar>
 	</nav>
@@ -53,5 +58,11 @@
 		padding: 8px 12px;
 		color: var(--text-color);
 		text-decoration: none;
+		border-radius: 6px;
+	}
+
+	.NavBar-menuLink img {
+		height: 40px;
+		width: auto;
 	}
 </style>

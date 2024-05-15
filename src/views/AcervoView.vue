@@ -1,7 +1,7 @@
 <script setup>
 	import { ref } from 'vue'
 	import TabMenu from 'primevue/tabmenu'
-	import ItemsList from '@/components/ItemsList.vue'
+	import CollectionList from '@/components/CollectionList.vue'
 
 	const items = ref([
 		{ label: 'Processadores e Memórias' },
@@ -16,6 +16,6 @@
 	<div class="flex flex-col gap-4">
 		<h1>Acervo</h1>
 		<TabMenu :model="items" />
-		<ItemsList />
+		<CollectionList />
 	</div>
 </template>

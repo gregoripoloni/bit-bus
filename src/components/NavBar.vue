@@ -5,9 +5,6 @@
 
 	const items = ref([
 		{
-				url: '/'
-		},
-		{
 				label: 'Acervo',
 				url: '/acervo'
 		},
@@ -24,11 +21,17 @@
 
 <template>
 	<nav class="NavBar">
-		<Menubar class="NavBar-menuBar" :model="items" #item="{ item }">
-				<RouterLink :to="item.url" class="NavBar-menuLink">
-					<img v-if="!item.label" src="@/assets/logo.png" />
-					<span v-else>{{ item.label }}</span>
-				</RouterLink>
+		<Menubar class="NavBar-menuBar" :model="items">
+				<template #start>
+					<RouterLink to="/" class="NavBar-logo">
+						<img src="@/assets/logo.png" />
+					</RouterLink>
+				</template>
+				<template #item="{ item }">
+					<RouterLink :to="item.url" class="NavBar-menuLink">
+						<span>{{ item.label }}</span>
+					</RouterLink>
+				</template>
 		</Menubar>
 	</nav>
 </template>
@@ -49,6 +52,7 @@
 		margin: auto;
 		border: none;
 		border-radius: 0;
+		gap: 16px;
 	}
 
 	.NavBar-menuLink {
@@ -60,8 +64,12 @@
 		border-radius: 6px;
 	}
 
-	.NavBar-menuLink img {
-		height: 40px;
-		width: auto;
+	.NavBar-logo {
+		display: flex;
+
+		img {
+			height: 40px;
+			width: auto;
+		}
 	}
 </style>

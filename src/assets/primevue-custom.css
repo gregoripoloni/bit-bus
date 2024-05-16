@@ -1,7 +1,23 @@
-.p-tabmenu-nav {
-	background: transparent;
-}
+@layer primevue {
 
-.p-menuitem-link {
-	background: transparent;
+	.p-button {
+		height: fit-content;
+	}
+
+	.p-tabmenu-nav {
+		background: transparent;
+	}
+
+	.p-menuitem-link {
+		background: transparent;
+	}
+
+	.p-menubar .p-menuitem {
+		margin: 0;
+	}
+
+	.p-breadcrumb {
+		background: transparent;
+	}
+
 }

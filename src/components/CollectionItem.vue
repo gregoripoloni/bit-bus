@@ -12,7 +12,7 @@
 
 <template>
 	<Card class="CollectionItem">
-		<template #header>
+		<template v-if="img" #header>
 			<div class="CollectionItem-header">
 				<img class="CollectionItem-image" :src="`data:image/png;base64, ${img}`" />
 			</div>

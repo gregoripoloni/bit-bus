@@ -20,4 +20,8 @@
 		background: transparent;
 	}
 
+	.p-dropdown .p-dropdown-label {
+		line-height: 17px;
+	}
+
 }

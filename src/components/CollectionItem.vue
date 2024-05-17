@@ -14,7 +14,7 @@
 	<Card class="CollectionItem">
 		<template v-if="img" #header>
 			<div class="CollectionItem-header">
-				<img class="CollectionItem-image" :src="`data:image/png;base64, ${img}`" />
+				<img class="CollectionItem-image" :src="img" />
 			</div>
 		</template>
 		<template #title>{{ name }}</template>

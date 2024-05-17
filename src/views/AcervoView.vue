@@ -23,8 +23,8 @@
 		<div class="flex justify-between items-center">
 			<Breadcrumb :home :model="items" #item="{ item }">
 				<RouterLink v-if="item.route" :to="item.route">
-						<span :class="[item.icon, 'text-primary']" />
-						<span class="text-primary font-medium">{{ item.label }}</span>
+					<span :class="[item.icon, 'text-primary']" />
+					<span class="text-primary font-medium">{{ item.label }}</span>
 				</RouterLink>
 				<span v-else class="text-2xl font-semibold">{{ item.label }}</span>
 			</Breadcrumb>

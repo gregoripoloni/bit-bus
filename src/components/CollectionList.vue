@@ -1,9 +1,11 @@
 <script setup>
 	import { ref } from 'vue'
+	import { useToast } from 'primevue/usetoast'
 	import { useCollectionStore } from '@/stores/collection'
 	import CollectionItem from '@/components/CollectionItem.vue'
 	import FormDialog from '@/components/FormDialog.vue'
 
+	const toast = useToast()
 	const { items, updateItem } = useCollectionStore()
 
 	const editId = ref(null)
@@ -16,6 +18,7 @@
 	
 	const submitItem = (item) => {
 		updateItem(editId.value, item)
+		toast.add({ severity: 'success', summary: 'Sucesso', detail: 'Item atualizado.', life: 3000 })
 	}
 </script>
 

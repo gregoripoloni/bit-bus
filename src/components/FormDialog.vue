@@ -9,14 +9,13 @@
 	import Calendar from 'primevue/calendar'
 	import Dropdown from 'primevue/dropdown'
 	import FileUpload from 'primevue/fileupload'
-	import { useToast } from 'primevue/usetoast'
-	import { useCollectionStore } from '@/stores/collection'
 
 	const props = defineProps({
-		visible: Boolean
+		visible: Boolean,
+		item: Object
 	})
 
-	const emit = defineEmits(['update:visible'])
+	const emit = defineEmits(['update:visible', 'submitItem'])
 
 	const visibleModel = computed({
 		get() {
@@ -27,19 +26,54 @@
 		}
 	})
 
-	const image = ref()
-	const name = ref()
-	const category = ref()
-	const type = ref()
-	const classification = ref()
-	const model = ref()
-	const manufacturer = ref()
-	const year = ref()
-	const quantity = ref()
-	const dimensions = ref()
-	const local = ref()
-	const description = ref()
-	const links = ref()
+	const image = ref(null)
+	const name = ref(null)
+	const category = ref(null)
+	const type = ref(null)
+	const classification = ref(null)
+	const model = ref(null)
+	const manufacturer = ref(null)
+	const year = ref(null)
+	const quantity = ref(null)
+	const dimensions = ref(null)
+	const local = ref(null)
+	const description = ref(null)
+	const links = ref(null)
+
+	const resetForm = () => {
+		image.value = null
+		name.value = null
+		category.value = null
+		type.value = null
+		classification.value = null
+		model.value = null
+		manufacturer.value = null
+		year.value = null
+		quantity.value = null
+		dimensions.value = null
+		local.value = null
+		description.value = null
+		links.value = null
+	}
+
+	const fillForm = () => {
+		if (!props.item) {
+			return
+		}
+
+		name.value = props.item.name
+		category.value = props.item.category
+		type.value = props.item.type
+		classification.value = props.item.classification
+		model.value = props.item.model
+		manufacturer.value = props.item.manufacturer
+		year.value = props.item.year ? new Date(props.item.year, 1, 1) : null
+		quantity.value = props.item.quantity
+		dimensions.value = props.item.dimensions
+		local.value = props.item.local
+		description.value = props.item.description
+		links.value = props.item.links
+	}
 
 	const categories = ref([
 		{ name: 'Processadores e Memórias', code: 1 },
@@ -66,9 +100,6 @@
 		{ name: 'Mini-ATX', code: 3 }
 	])
 
-	const { addItem } = useCollectionStore()
-	const toast = useToast()
-
 	const uploadImage = async (event) => {
 		const file = event.files[0]
 		const reader = new FileReader()
@@ -82,13 +113,12 @@
 	}
 
 	const submit = () => {
-		addItem({
-			id: 1,
+		emit('submitItem', {
 			img: image.value,
 			name: name.value,
-			category: category.value ? category.value.name : null,
-			type: type.value ? type.value.name : null,
-			classification: classification.value ? classification.value.name : null,
+			category: category.value,
+			type: type.value,
+			classification: classification.value,
 			model: model.value,
 			manufacturer: manufacturer.value,
 			year: year.value ? year.value.getFullYear() : null,
@@ -98,15 +128,13 @@
 			description: description.value,
 			links: links.value
 		})
-
 		visibleModel.value = false
-		toast.add({ severity: 'success', summary: 'Sucesso', detail: 'Item cadastrado no acervo.', life: 3000 })
 	}
 </script>
 
 <template>
 	<Toast />
-	<Dialog v-model:visible="visibleModel" modal header="Incluir item no acervo" :style="{ width: '75rem' }">
+	<Dialog v-model:visible="visibleModel" modal header="Incluir item no acervo" :style="{ width: '75rem' }" @hide="resetForm" @show="fillForm">
 		<div class="flex flex-col gap-4">
 			<span class="p-text-secondary">Insira as informações do item.</span>
 			<div class="grid grid-cols-2 gap-4">

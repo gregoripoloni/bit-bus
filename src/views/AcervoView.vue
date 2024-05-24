@@ -5,6 +5,8 @@
 	import Breadcrumb from 'primevue/breadcrumb'
 	import CollectionList from '@/components/CollectionList.vue'
 	import FormDialog from '@/components/FormDialog.vue'
+	import { useToast } from 'primevue/usetoast'
+	import { useCollectionStore } from '@/stores/collection'
 
 	const home = ref({
 		icon: 'pi pi-home',
@@ -16,6 +18,14 @@
 	])
 
 	const visible = ref(false)
+
+	const toast = useToast()
+	const { addItem } = useCollectionStore()
+
+	const submitItem = (item) => {
+		addItem(item)
+		toast.add({ severity: 'success', summary: 'Sucesso', detail: 'Item cadastrado no acervo.', life: 3000 })
+	}
 </script>
 
 <template>
@@ -29,7 +39,7 @@
 				<span v-else class="text-2xl font-semibold">{{ item.label }}</span>
 			</Breadcrumb>
 			<Button label="Incluir" icon="pi pi-plus" @click="visible = true" />
-			<FormDialog v-model:visible="visible" />
+			<FormDialog v-model:visible="visible" @submitItem="submitItem" />
 		</div>
 		<CollectionList />
 	</div>

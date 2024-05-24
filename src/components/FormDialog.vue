@@ -9,10 +9,11 @@
 	import Calendar from 'primevue/calendar'
 	import Dropdown from 'primevue/dropdown'
 	import FileUpload from 'primevue/fileupload'
+	import { useCollectionStore } from '@/stores/collection'
 
 	const props = defineProps({
 		visible: Boolean,
-		item: Object
+		id: Number
 	})
 
 	const emit = defineEmits(['update:visible', 'submitItem'])
@@ -25,6 +26,31 @@
 			emit('update:visible', newValue)
 		}
 	})
+
+	const categories = ref([
+		{ name: 'Processadores e Memórias', code: 1 },
+		{ name: 'Periféricos e Discos Removíveis', code: 2 },
+		{ name: 'Servidores (Tower/físico)', code: 3 },
+		{ name: 'Placas', code: 4 },
+		{ name: 'Telefone', code: 5 }
+	])
+
+	const types = ref([
+		{ name: 'Mídia', code: 1 },
+		{ name: 'Dispositivo', code: 2 },
+		{ name: 'Protótipo', code: 3 },
+		{ name: 'Mouse', code: 4 },
+		{ name: 'Teclado', code: 5 },
+		{ name: 'Dispositivo de Entrada', code: 6 },
+		{ name: 'Dispositivo de Armazenamento', code: 7 },
+		{ name: 'Dispositivo de Saída', code: 8 }
+	])
+
+	const classifications = ref([
+		{ name: 'ATX', code: 1 },
+		{ name: 'Micro-ATX', code: 2 },
+		{ name: 'Mini-ATX', code: 3 }
+	])
 
 	const image = ref(null)
 	const name = ref(null)
@@ -56,60 +82,28 @@
 		links.value = null
 	}
 
+	const { getItem } = useCollectionStore()
+
 	const fillForm = () => {
-		if (!props.item) {
+		if (props.id === undefined) {
 			return
 		}
 
-		name.value = props.item.name
-		category.value = props.item.category
-		type.value = props.item.type
-		classification.value = props.item.classification
-		model.value = props.item.model
-		manufacturer.value = props.item.manufacturer
-		year.value = props.item.year ? new Date(props.item.year, 1, 1) : null
-		quantity.value = props.item.quantity
-		dimensions.value = props.item.dimensions
-		local.value = props.item.local
-		description.value = props.item.description
-		links.value = props.item.links
-	}
+		const item = getItem(props.id)
 
-	const categories = ref([
-		{ name: 'Processadores e Memórias', code: 1 },
-		{ name: 'Periféricos e Discos Removíveis', code: 2 },
-		{ name: 'Servidores (Tower/físico)', code: 3 },
-		{ name: 'Placas', code: 4 },
-		{ name: 'Telefone', code: 5 }
-	])
-
-	const types = ref([
-		{ name: 'Mídia', code: 1 },
-		{ name: 'Dispositivo', code: 2 },
-		{ name: 'Protótipo', code: 3 },
-		{ name: 'Mouse', code: 4 },
-		{ name: 'Teclado', code: 5 },
-		{ name: 'Dispositivo de Entrada', code: 6 },
-		{ name: 'Dispositivo de Armazenamento', code: 7 },
-		{ name: 'Dispositivo de Saída', code: 8 }
-	])
-
-	const classifications = ref([
-		{ name: 'ATX', code: 1 },
-		{ name: 'Micro-ATX', code: 2 },
-		{ name: 'Mini-ATX', code: 3 }
-	])
-
-	const uploadImage = async (event) => {
-		const file = event.files[0]
-		const reader = new FileReader()
-		let blob = await fetch(file.objectURL).then((r) => r.blob())
-
-		reader.readAsDataURL(blob)
-
-		reader.onloadend = () => {
-			image.value = reader.result
-		}
+		image.value = item.img
+		name.value = item.name
+		category.value = item.category
+		type.value = item.type
+		classification.value = item.classification
+		model.value =item.model
+		manufacturer.value = item.manufacturer
+		year.value = item.year ? new Date(item.year, 1, 1) : null
+		quantity.value = item.quantity
+		dimensions.value = item.dimensions
+		local.value = item.local
+		description.value = item.description
+		links.value = item.links
 	}
 
 	const submit = () => {
@@ -129,6 +123,18 @@
 			links: links.value
 		})
 		visibleModel.value = false
+	}
+
+	const uploadImage = async (event) => {
+		const file = event.files[0]
+		const reader = new FileReader()
+		let blob = await fetch(file.objectURL).then((r) => r.blob())
+
+		reader.readAsDataURL(blob)
+
+		reader.onloadend = () => {
+			image.value = reader.result
+		}
 	}
 </script>
 

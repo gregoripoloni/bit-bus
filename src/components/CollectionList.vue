@@ -1,8 +1,22 @@
 <script setup>
-	import CollectionItem from '@/components/CollectionItem.vue'
+	import { ref } from 'vue'
 	import { useCollectionStore } from '@/stores/collection'
+	import CollectionItem from '@/components/CollectionItem.vue'
+	import FormDialog from '@/components/FormDialog.vue'
 
-	const { items } = useCollectionStore()
+	const { items, updateItem } = useCollectionStore()
+
+	const editId = ref(null)
+	const visible = ref(false)
+
+	const editItem = (id) => {
+		editId.value = id
+		visible.value = true
+	}
+	
+	const submitItem = (item) => {
+		updateItem(editId.value, item)
+	}
 </script>
 
 <template>
@@ -14,6 +28,8 @@
 			:name="item.name"
 			:description="item.description"
 			:img="item.img"
+			@editItem="editItem"
 		/>
+		<FormDialog v-model:visible="visible" :id="editId" @submitItem="submitItem" />
 	</div>
 </template>

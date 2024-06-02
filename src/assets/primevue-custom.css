@@ -28,4 +28,12 @@
 		line-height: 17px;
 	}
 
+	.p-card .p-card-body {
+		height: 100%;
+	}
+
+	.p-card .p-card-footer {
+		margin-top: auto;
+	}
+
 }

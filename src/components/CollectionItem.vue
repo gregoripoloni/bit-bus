@@ -23,7 +23,7 @@
 		<template #title>{{ name }}</template>
 		<template #subtitle>{{ category }}</template>
 		<template #content>
-			<p class="m-0">{{ description }}</p>
+			<p class="CollectionItem-description m-0">{{ description }}</p>
 		</template>
 		<template #footer>
 			<div class="flex gap-3 mt-1">
@@ -45,6 +45,16 @@
 
 	.CollectionItem-image {
 		border-radius: 8px;
-		width: 50%;
+		width: 100%;
+		aspect-ratio: 2;
+		object-fit: cover;
+	}
+
+	.CollectionItem-description {
+		text-overflow: ellipsis;
+		overflow: hidden;
+		display: -webkit-box;
+		-webkit-line-clamp: 5;
+		-webkit-box-orient: vertical;
 	}
 </style>

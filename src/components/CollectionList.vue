@@ -3,6 +3,8 @@
 	import Button from 'primevue/button'
 	import InputText from 'primevue/inputtext'
 	import MultiSelect from 'primevue/multiselect'
+	import InputGroup from 'primevue/inputgroup'
+	import InputGroupAddon from 'primevue/inputgroupaddon'
 	import { useToast } from 'primevue/usetoast'
 	import { useCollectionStore } from '@/stores/collection'
 	import CollectionItem from '@/components/CollectionItem.vue'
@@ -50,20 +52,29 @@
 </script>
 
 <template>
-	<div class="flex flex-col gap-4">
+	<div class="flex flex-col gap-8">
 		<div class="flex justify-between items-center gap-4">
 			<div class="grid grid-cols-4 gap-4 w-full">
-				<InputText v-model="nameFilter" placeholder="Nome" class="w-full" />
-				<MultiSelect
-					v-model="categoryFilter" 
-					:options="categories" 
-					optionLabel="name" 
-					placeholder="Categoria" 
-					:showToggleAll="false" 
-					:maxSelectedLabels="1" 
-					selectedItemsLabel="{0} categorias selecionadas"
-					class="w-full"
-				/>
+				<InputGroup class="w-full">
+					<InputGroupAddon>
+						<i class="pi pi-filter"></i>
+					</InputGroupAddon>
+					<InputText v-model="nameFilter" placeholder="Nome" />
+				</InputGroup>
+				<InputGroup class="w-full">
+					<InputGroupAddon>
+						<i class="pi pi-filter"></i>
+					</InputGroupAddon>
+					<MultiSelect
+						v-model="categoryFilter" 
+						:options="categories" 
+						optionLabel="name" 
+						placeholder="Categoria" 
+						:showToggleAll="false" 
+						:maxSelectedLabels="1" 
+						selectedItemsLabel="{0} categorias selecionadas"
+					/>
+				</InputGroup>
 			</div>
 			<Button label="Incluir" icon="pi pi-plus" @click="emit('addItem')" />
 		</div>

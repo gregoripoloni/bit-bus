@@ -9,6 +9,7 @@
 	import Calendar from 'primevue/calendar'
 	import Dropdown from 'primevue/dropdown'
 	import FileUpload from 'primevue/fileupload'
+	import Message from 'primevue/message'
 	import { useCollectionStore } from '@/stores/collection'
 
 	const props = defineProps({
@@ -66,6 +67,16 @@
 	const description = ref(null)
 	const links = ref(null)
 
+	const invalidName = computed(() => {
+		return !name.value
+	})
+
+	const invalidCategory = computed(() => {
+		return !category.value
+	})
+
+	const invalidForm = ref(false)
+
 	const resetForm = () => {
 		image.value = null
 		name.value = null
@@ -80,6 +91,7 @@
 		local.value = null
 		description.value = null
 		links.value = null
+		invalidForm.value = false
 	}
 
 	const { getItem } = useCollectionStore()
@@ -107,14 +119,19 @@
 	}
 
 	const submit = () => {
+		if (invalidName.value || invalidCategory.value) {
+			invalidForm.value = true
+			return
+		}
+
 		emit('submitItem', {
 			img: image.value,
 			name: name.value,
 			category: category.value,
-			type: type.value,
-			classification: classification.value,
-			model: model.value,
-			manufacturer: manufacturer.value,
+			type: category.value && category.value.code == 2 ? type.value : null,
+			classification: category.value && category.value.code == 4 ? classification.value : null,
+			model: category.value && category.value.code == 5 ? model.value : null,
+			manufacturer: category.value && category.value.code == 5 ? manufacturer.value : null,
 			year: year.value ? year.value.getFullYear() : null,
 			quantity: quantity.value,
 			dimensions: dimensions.value,
@@ -122,6 +139,7 @@
 			description: description.value,
 			links: links.value
 		})
+
 		visibleModel.value = false
 	}
 
@@ -143,17 +161,20 @@
 	<Dialog v-model:visible="visibleModel" modal header="Incluir item no acervo" :style="{ width: '75rem' }" @hide="resetForm" @show="fillForm">
 		<div class="flex flex-col gap-4">
 			<span class="p-text-secondary">Insira as informações do item.</span>
+			<Transition name="p-message">
+					<Message v-if="invalidForm && (invalidName || invalidCategory)" severity="error" :closable="false">Preencha os campos obrigatórios.</Message>
+			</Transition>
 			<div class="grid grid-cols-2 gap-4">
 				<div class="col-span-2">
 					<FileUpload class="col-span-2" chooseLabel="Enviar imagem" mode="basic" accept="image/*" @select="uploadImage" />
 				</div>
 				<div class="flex flex-col gap-2">
 					<label>Nome</label>
-					<InputText v-model="name" autocomplete="off" />
+					<InputText v-model="name" :invalid="invalidForm && invalidName" autocomplete="off" />
 				</div>
 				<div class="flex flex-col gap-2">
 					<label>Categoria</label>
-					<Dropdown v-model="category" :options="categories" optionLabel="name" placeholder="Selecione uma categoria" />
+					<Dropdown v-model="category" :invalid="invalidForm && invalidCategory" :options="categories" optionLabel="name" placeholder="Selecione uma categoria" />
 				</div>
 				<div v-if="category && category.code == 2" class="flex flex-col gap-2">
 					<label>Tipo</label>

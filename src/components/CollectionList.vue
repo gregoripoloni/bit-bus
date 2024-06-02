@@ -3,7 +3,7 @@
 	import { useToast } from 'primevue/usetoast'
 	import { useCollectionStore } from '@/stores/collection'
 	import CollectionItem from '@/components/CollectionItem.vue'
-	import FormDialog from '@/components/FormDialog.vue'
+	import CollectionForm from '@/components/CollectionForm.vue'
 
 	const toast = useToast()
 	const { items, updateItem } = useCollectionStore()
@@ -33,6 +33,6 @@
 			:img="item.img"
 			@editItem="editItem"
 		/>
-		<FormDialog v-model:visible="visible" :id="editId" @submitItem="submitItem" />
+		<CollectionForm v-model:visible="visible" :id="editId" @submitItem="submitItem" />
 	</div>
 </template>

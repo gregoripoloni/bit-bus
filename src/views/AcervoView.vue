@@ -4,7 +4,7 @@
 	import Button from 'primevue/button'
 	import Breadcrumb from 'primevue/breadcrumb'
 	import CollectionList from '@/components/CollectionList.vue'
-	import FormDialog from '@/components/FormDialog.vue'
+	import CollectionForm from '@/components/CollectionForm.vue'
 	import { useToast } from 'primevue/usetoast'
 	import { useCollectionStore } from '@/stores/collection'
 
@@ -39,7 +39,7 @@
 				<span v-else class="text-2xl font-semibold">{{ item.label }}</span>
 			</Breadcrumb>
 			<Button label="Incluir" icon="pi pi-plus" @click="visible = true" />
-			<FormDialog v-model:visible="visible" @submitItem="submitItem" />
+			<CollectionForm v-model:visible="visible" @submitItem="submitItem" />
 		</div>
 		<CollectionList />
 	</div>

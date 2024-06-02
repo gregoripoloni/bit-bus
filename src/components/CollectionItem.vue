@@ -5,6 +5,7 @@
 	defineProps({
 		id: Number,
 		name: String,
+		category: String,
 		description: String,
 		img: String
 	})
@@ -20,6 +21,7 @@
 			</div>
 		</template>
 		<template #title>{{ name }}</template>
+		<template #subtitle>{{ category }}</template>
 		<template #content>
 			<p class="m-0">{{ description }}</p>
 		</template>

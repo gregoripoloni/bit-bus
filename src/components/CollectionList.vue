@@ -72,6 +72,7 @@
 				:key="item.id"
 				:id="item.id"
 				:name="item.name"
+				:category="item.category.name"
 				:description="item.description"
 				:img="item.img"
 				@editItem="editItem"

@@ -51,9 +51,9 @@
 
 <template>
 	<div class="flex flex-col gap-4">
-		<div class="flex justify-between items-center">
-			<div class="flex items-center gap-2">
-				<InputText v-model="nameFilter" placeholder="Nome" />
+		<div class="flex justify-between items-center gap-4">
+			<div class="grid grid-cols-4 gap-4 w-full">
+				<InputText v-model="nameFilter" placeholder="Nome" class="w-full" />
 				<MultiSelect
 					v-model="categoryFilter" 
 					:options="categories" 
@@ -62,6 +62,7 @@
 					:showToggleAll="false" 
 					:maxSelectedLabels="1" 
 					selectedItemsLabel="{0} categorias selecionadas"
+					class="w-full"
 				/>
 			</div>
 			<Button label="Incluir" icon="pi pi-plus" @click="emit('addItem')" />

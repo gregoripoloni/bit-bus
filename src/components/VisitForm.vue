@@ -8,7 +8,7 @@
 	import Calendar from 'primevue/calendar'
 	import InputNumber from 'primevue/inputnumber'
 	import Dropdown from 'primevue/dropdown'
-import { useVisitStore } from '@/stores/VisitsStore'
+	import { useVisitStore } from '@/stores/VisitsStore'
 
 	const props = defineProps({
 		visible: Boolean,
@@ -45,10 +45,6 @@ import { useVisitStore } from '@/stores/VisitsStore'
 		period.value = '';
 		responsable.value = '';
 		items.value = '';
-	}
-
-	const submit = async () => {
-
 	}
 </script>
 

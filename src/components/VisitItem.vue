@@ -13,7 +13,7 @@
 		totalVisitors: Number
 	})
 
-	const emit = defineEmits(['editItem'])
+	const emit = defineEmits(['editItem', 'viewVisitors'])
 
 	const openNewVisitWindow = (id) => {
 		const routeData = router.resolve({name: 'visitar', query: {id: id}});
@@ -33,6 +33,7 @@
 			<div class="flex gap-3 mt-1">
 				<Button label="Visitar" severity="secondary" @click="openNewVisitWindow(id)"/>
 				<Button label="Editar" severity="secondary" @click="emit('editItem', id)"/>
+				<Button label="Visualizar Visitantes" severity="secondary" @click="emit('viewVisitors', id)"/>
 			</div>
 		</template>
 	</Card>

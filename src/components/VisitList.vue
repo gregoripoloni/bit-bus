@@ -1,8 +1,8 @@
 <script setup>
-	import { ref, onMounted } from 'vue';
+	import { ref } from 'vue';
 	import VisitItem from '@/components/VisitItem.vue'
-	import { useVisitStore } from '@/stores/VisitsStore';
 	import VisitForm from '@/components/VisitForm.vue';
+	import VisitorDialog from '@/components/VisitorDialog.vue';
 	
 	const props = defineProps({
 		items: Array
@@ -10,10 +10,19 @@
 
 	const editId = ref(0);
 	const visible = ref(false);
+	const visitors = ref([]);
+	const visibleVisitorDialog = ref(false);
+
+	const onViewVisitors = (id) => {
+		editId.value = id;
+		visitors.value = props.items.find(x => x.id == id);
+		visitors.value = visitors.value.visitors;
+		visibleVisitorDialog.value = true;
+	}
 
 	const editItem = (id) => {
-		editId.value = id
-		visible.value = true
+		editId.value = id;
+		visible.value = true;
 	}
 </script>
 <template>
@@ -28,8 +37,10 @@
 				:responsable="item.responsable"
 				:totalVisitors="item.visitors.length"
 				@editItem="editItem"
+				@viewVisitors="onViewVisitors"
 			/>
 			<VisitForm v-model:visible="visible" :id="editId" @submitItem="" />
+			<VisitorDialog v-model:visible="visibleVisitorDialog" :visitors="visitors"/>
 		</div>
 	</Suspense>
 </template>

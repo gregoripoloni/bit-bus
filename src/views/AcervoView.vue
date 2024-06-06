@@ -38,9 +38,8 @@
 				</RouterLink>
 				<span v-else class="text-2xl font-semibold">{{ item.label }}</span>
 			</Breadcrumb>
-			<Button label="Incluir" icon="pi pi-plus" @click="visible = true" />
-			<CollectionForm v-model:visible="visible" @submitItem="submitItem" />
 		</div>
-		<CollectionList />
+		<CollectionList @addItem="visible = true" />
+		<CollectionForm v-model:visible="visible" @submitItem="submitItem" />
 	</div>
 </template>

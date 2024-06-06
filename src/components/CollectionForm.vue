@@ -64,6 +64,7 @@
 	const quantity = ref(null)
 	const dimensions = ref(null)
 	const local = ref(null)
+	const donater = ref(null)
 	const description = ref(null)
 	const links = ref(null)
 
@@ -89,6 +90,7 @@
 		quantity.value = null
 		dimensions.value = null
 		local.value = null
+		donater.value = null
 		description.value = null
 		links.value = null
 		invalidForm.value = false
@@ -114,6 +116,7 @@
 		quantity.value = item.quantity
 		dimensions.value = item.dimensions
 		local.value = item.local
+		donater.value = item.donater
 		description.value = item.description
 		links.value = item.links
 	}
@@ -136,6 +139,7 @@
 			quantity: quantity.value,
 			dimensions: dimensions.value,
 			local: local.value,
+			donater: donater.value,
 			description: description.value,
 			links: links.value
 		})
@@ -170,7 +174,7 @@
 				</div>
 				<div class="flex flex-col gap-2">
 					<label>Nome</label>
-					<InputText v-model="name" :invalid="invalidForm && invalidName" autocomplete="off" />
+					<InputText v-model="name" :invalid="invalidForm && invalidName" />
 				</div>
 				<div class="flex flex-col gap-2">
 					<label>Categoria</label>
@@ -186,11 +190,11 @@
 				</div>
 				<div v-if="category && category.code == 5" class="flex flex-col gap-2">
 					<label>Modelo</label>
-					<InputText v-model="model" autocomplete="off" />
+					<InputText v-model="model" />
 				</div>
 				<div v-if="category && category.code == 5" class="flex flex-col gap-2">
 					<label>Fabricante</label>
-					<InputText v-model="manufacturer" autocomplete="off" />
+					<InputText v-model="manufacturer" />
 				</div>
 				<div class="flex flex-col gap-2">
 					<label>Ano</label>
@@ -202,19 +206,23 @@
 				</div>
 				<div class="flex flex-col gap-2">
 					<label>Dimensões</label>
-					<InputText v-model="dimensions" autocomplete="off" />
+					<InputText v-model="dimensions" />
 				</div>
 				<div class="flex flex-col gap-2">
 					<label>Local de armazenamento</label>
-					<InputText v-model="local" autocomplete="off" />
+					<InputText v-model="local" />
+				</div>
+				<div class="flex flex-col gap-2">
+					<label>Nome do doador</label>
+					<InputText v-model="donater" />
 				</div>
 				<div class="flex flex-col gap-2 col-span-2">
 					<label>Descrição</label>
-					<Textarea v-model="description" autocomplete="off" />
+					<Textarea v-model="description" />
 				</div>
 				<div class="flex flex-col gap-2 col-span-2">
 					<label>Links</label>
-					<Textarea v-model="links" autocomplete="off" />
+					<Textarea v-model="links" />
 				</div>
 			</div>
 			<div class="flex justify-content-end gap-2">

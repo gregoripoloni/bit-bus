@@ -64,6 +64,7 @@
 	const quantity = ref(null)
 	const dimensions = ref(null)
 	const local = ref(null)
+	const donater = ref(null)
 	const description = ref(null)
 	const links = ref(null)
 
@@ -89,6 +90,7 @@
 		quantity.value = null
 		dimensions.value = null
 		local.value = null
+		donater.value = null
 		description.value = null
 		links.value = null
 		invalidForm.value = false
@@ -114,6 +116,7 @@
 		quantity.value = item.quantity
 		dimensions.value = item.dimensions
 		local.value = item.local
+		donater.value = item.donater
 		description.value = item.description
 		links.value = item.links
 	}
@@ -136,6 +139,7 @@
 			quantity: quantity.value,
 			dimensions: dimensions.value,
 			local: local.value,
+			donater: donater.value,
 			description: description.value,
 			links: links.value
 		})
@@ -207,6 +211,10 @@
 				<div class="flex flex-col gap-2">
 					<label>Local de armazenamento</label>
 					<InputText v-model="local" />
+				</div>
+				<div class="flex flex-col gap-2">
+					<label>Nome do doador</label>
+					<InputText v-model="donater" />
 				</div>
 				<div class="flex flex-col gap-2 col-span-2">
 					<label>Descrição</label>

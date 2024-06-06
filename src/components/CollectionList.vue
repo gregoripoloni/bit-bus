@@ -76,7 +76,7 @@
 					/>
 				</InputGroup>
 			</div>
-			<Button label="Incluir" icon="pi pi-plus" @click="emit('addItem')" />
+			<Button label="Incluir" icon="pi pi-plus" @click="emit('addItem')" class="shrink-0" />
 		</div>
 		<div class="grid grid-cols-4 gap-4">
 			<CollectionItem

@@ -1,7 +1,8 @@
 <script setup>
 	import Dialog from 'primevue/dialog';
-	import Card from 'primevue/card';
-import { computed } from 'vue';
+	import { computed } from 'vue';
+	import DataTable from 'primevue/datatable';
+	import Column from 'primevue/column';
 
 	const props = defineProps({
 		visible: Boolean,
@@ -22,10 +23,11 @@ import { computed } from 'vue';
 <template>
 	<Suspense>
 		<Dialog v-model:visible="visibleModel" modal header="Visitantes" :style="{ width: '75rem' }">
-			<div class="grid grid-cols-4 gap-4">
-				<Card class="CollectionItem" v-for="visitor in visitors">
-					<template #title>Nome: {{ visitor.name }}</template>
-				</Card>
+			<div class="grid grid-cols-1">
+				<DataTable :value="visitors" showGridlines  tableStyle="min-width: 100%">
+					<Column field="name" header="Name"></Column>
+					<Column field="email" header="email"></Column>
+				</DataTable>
 			</div>
 		</Dialog>
 	</Suspense>

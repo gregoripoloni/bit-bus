@@ -11,13 +11,16 @@ const router = createRouter({
 		},
 		{
 			path: '/acervo',
-			name: 'acervo',
-			component:  () => import('@/views/AcervoView.vue')
-		},
-		{
-			path: '/acervo/:id',
-			name: 'acervoItem',
-			component:  () => import('@/views/AcervoItemView.vue')
+			children: [
+				{
+					path: '',
+					component: () => import('@/views/CollectionView.vue'),
+				},
+				{
+					path: ':id',
+					component: () => import('@/views/ItemView.vue')
+				}
+			]
 		},
 		{
 			path: '/visitas',

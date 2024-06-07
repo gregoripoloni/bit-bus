@@ -6,7 +6,11 @@ import NavBar from '@/components/NavBar.vue'
 <template>
 	<NavBar />
 	<main>
-		<RouterView />
+		<RouterView v-slot="{ Component }">
+			<KeepAlive>
+				<Component :is="Component" />
+			</KeepAlive>
+		</RouterView>
 	</main>
 </template>
 

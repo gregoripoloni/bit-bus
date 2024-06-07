@@ -33,6 +33,8 @@
 			<div class="flex gap-3 mt-1">
 				<Button label="Visitar" severity="secondary" @click="openNewVisitWindow(id)"/>
 				<Button label="Editar" severity="secondary" @click="emit('editItem', id)"/>
+			</div>
+			<div class="flex gap-3 mt-1">
 				<Button label="Visualizar Visitantes" severity="secondary" @click="emit('viewVisitors', id)"/>
 			</div>
 		</template>

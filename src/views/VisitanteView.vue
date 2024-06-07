@@ -13,28 +13,33 @@
 	const visitsApiClient = new VisitsAPIClient();
 
 	const name = ref('');
+	const email = ref('');
 	const id = ref(route.query.id);
 
 	const submit = async () => {
-	if (name.value == '') {
-		toast.add({ severity: 'warn', summary: 'Não foi possível salvar sua presença', detail: 'Você precisa preencher o nome para salvar a presença como visitante', life: 3000 });
-		return;
-	}
-
-	try {
-		let error = await visitsApiClient.addVisitor(id.value, {
-			name: name.value
-		});
-
-		if (error != '' && error.indexOf('{') == -1) {
-			toast.add({ severity: 'error', summary: error, life: 3000 });
+		if (name.value == '') {
+			toast.add({ severity: 'warn', summary: 'Não foi possível salvar sua presença', detail: 'Você precisa preencher o nome para salvar a presença como visitante', life: 5000 });
 			return;
 		}
-		toast.add({ severity: 'success', summary: 'sua presença foi salva com sucesso', life: 3000 });
-	} catch (e) {
-		toast.add({ severity: 'error', summary: e, life: 3000 });
+
+		try {
+			let error = await visitsApiClient.addVisitor(id.value, {
+				name: name.value,
+				email: email.value
+			});
+
+			if (error != '' && error.indexOf('{') == -1) {
+				toast.add({ severity: 'error', summary: error, life: 5000 });
+				return;
+			}
+			toast.add({ severity: 'success', summary: 'sua presença foi salva com sucesso', life: 5000 });
+
+			name.value = '';
+			email.value = '';
+		} catch (e) {
+			toast.add({ severity: 'error', summary: e, life: 5000 });
+		}
 	}
-}
 </script>
 
 <template>
@@ -47,6 +52,12 @@
 			<div class="flex flex-col w gap-2 w-1/2 text-left">
 				<label>Seu Nome</label>
 				<InputText class="col-span-2" v-model="name" />
+			</div>
+		</div>
+		<div class="flex justify-center">
+			<div class="flex flex-col w gap-2 w-1/2 text-left">
+				<label>Seu E-mail</label>
+				<InputText type="email" class="col-span-2" v-model="email" />
 			</div>
 		</div>
 		<div class="flex justify-end w-full gap-2">

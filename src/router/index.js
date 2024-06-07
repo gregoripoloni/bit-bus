@@ -15,6 +15,11 @@ const router = createRouter({
 			component:  () => import('@/views/AcervoView.vue')
 		},
 		{
+			path: '/acervo/:id',
+			name: 'acervoItem',
+			component:  () => import('@/views/AcervoItemView.vue')
+		},
+		{
 			path: '/visitas',
 			name: 'visitas',
 			component:  () => import('@/views/VisitasView.vue')

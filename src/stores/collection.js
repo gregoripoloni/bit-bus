@@ -2,7 +2,7 @@ import { ref, reactive } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useCollectionStore = defineStore('collection', () => {
-	const currentId = ref(0)
+	const currentId = ref(1)
 	const items = reactive([])
 
 	const addItem = (item) => {

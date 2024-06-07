@@ -1,4 +1,5 @@
 <script setup>
+	import { RouterLink } from 'vue-router'
 	import Card from 'primevue/card'
 	import Button from 'primevue/button'
 
@@ -27,7 +28,9 @@
 		</template>
 		<template #footer>
 			<div class="flex gap-3 mt-1">
-				<Button label="Visitar" severity="secondary" />
+				<RouterLink :to="`/acervo/${id}`">
+					<Button label="Ver" severity="secondary" />
+				</RouterLink>
 				<Button label="Editar" severity="secondary" @click="emit('editItem', id)" />
 			</div>
 		</template>
@@ -46,7 +49,7 @@
 	.CollectionItem-image {
 		border-radius: 8px;
 		width: 100%;
-		aspect-ratio: 2;
+		aspect-ratio: 1;
 		object-fit: cover;
 	}
 

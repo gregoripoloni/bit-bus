@@ -78,14 +78,13 @@
 			</div>
 			<Button label="Incluir" icon="pi pi-plus" @click="emit('addItem')" class="shrink-0" />
 		</div>
-		<div class="grid grid-cols-4 gap-4">
+		<div class="grid grid-cols-6 gap-4">
 			<CollectionItem
 				v-for="item in filteredItems"
 				:key="item.id"
 				:id="item.id"
 				:name="item.name"
 				:category="item.category.name"
-				:description="item.description"
 				:img="item.img"
 				@editItem="editItem"
 			/>

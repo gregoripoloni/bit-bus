@@ -7,7 +7,6 @@
 		id: Number,
 		name: String,
 		category: String,
-		description: String,
 		img: String
 	})
 
@@ -23,9 +22,6 @@
 		</template>
 		<template #title>{{ name }}</template>
 		<template #subtitle>{{ category }}</template>
-		<template #content>
-			<p class="CollectionItem-description m-0">{{ description }}</p>
-		</template>
 		<template #footer>
 			<div class="flex gap-3 mt-1">
 				<RouterLink :to="`/acervo/${id}`">
@@ -51,13 +47,5 @@
 		width: 100%;
 		aspect-ratio: 1;
 		object-fit: cover;
-	}
-
-	.CollectionItem-description {
-		text-overflow: ellipsis;
-		overflow: hidden;
-		display: -webkit-box;
-		-webkit-line-clamp: 5;
-		-webkit-box-orient: vertical;
 	}
 </style>

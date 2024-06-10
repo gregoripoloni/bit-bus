@@ -4,6 +4,7 @@
 	import Breadcrumb from 'primevue/breadcrumb'
 	import { useVisitStore } from '@/stores/VisitsStore'
 	import VisitList from '@/components/VisitList.vue'
+	import VisitForm from '@/components/VisitForm.vue'
 	import { onMounted, ref } from 'vue'
 	import Calendar from 'primevue/calendar'
 	import InputText from 'primevue/inputtext'
@@ -20,6 +21,7 @@
 	const responsable = ref();
 	const place = ref();
 	const isLoading = ref(true);
+	const visible = ref(false);
 
 	const items = ref([
 		{ label: 'Visitas' }
@@ -53,9 +55,8 @@
 			listItems.value = result;
 			isLoading.value = false;
 		} catch (e) {
-
+			console.log(e);
 		}
-
 	}
 
 </script>
@@ -99,10 +100,11 @@
 			<Skeleton width="22rem" height="18rem"/>
 		</div>
 		<VisitList :items="listItems" v-else-if="listItems.length > 0"/>
-		<div class="flex flex-col gap-4 align-center w-full justify-center text-center" v-else>
-			<i class="pi pi-star-half-fill text-9xl"></i>
-			<h1>Nenhum resultado encontrado</h1>
-			<p>Não encontramos nenhum resultado resultado, <br/>por favor busque com outros filtros</p>
+			<div class="flex flex-col gap-4 align-center w-full justify-center text-center" v-else>
+				<i class="pi pi-star-half-fill text-9xl"></i>
+				<h1>Nenhum resultado encontrado</h1>
+				<p>Não encontramos nenhum resultado resultado, <br/>por favor busque com outros filtros</p>
+			</div>
 		</div>
-	</div>
+		<VisitForm v-model:visible="visible" :id="null" @submitItem="" />
 </template>

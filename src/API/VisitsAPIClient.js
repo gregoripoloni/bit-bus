@@ -16,6 +16,10 @@ class VisitsAPIClient extends APIClient {
 	}
 
 	async getById(id) {
+		if (id === '0') {
+			return {};
+		}
+
 		let result = await fetch(this.getURL() + `/${id}`);
 		return await result.json();
 	}
@@ -29,6 +33,28 @@ class VisitsAPIClient extends APIClient {
 			body: JSON.stringify(visitor)
 		});
 		return await result.text();
+	}
+
+	async save(visit) {
+		let result = await fetch(this.getURL() + ``, {
+			method: "POST",
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(visit)
+		});
+		return await result.json();
+	}
+
+	async update(visit) {
+		let result = await fetch(this.getURL() + ``, {
+			method: "PUT",
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(visit)
+		});
+		return await result.json();
 	}
 }
 

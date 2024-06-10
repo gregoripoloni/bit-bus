@@ -32,7 +32,7 @@
 				toast.add({ severity: 'error', summary: error, life: 5000 });
 				return;
 			}
-			toast.add({ severity: 'success', summary: 'sua presença foi salva com sucesso', life: 5000 });
+			toast.add({ severity: 'success', summary: 'Sua presença foi salva com sucesso', life: 5000 });
 
 			name.value = '';
 			email.value = '';

@@ -6,7 +6,7 @@
 	const router = useRouter();
 
 	defineProps({
-		id: Number,
+		id: String,
 		place: String,
 		period: String,
 		responsable: String,

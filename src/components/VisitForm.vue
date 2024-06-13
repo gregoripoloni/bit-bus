@@ -70,13 +70,12 @@
 				place: place.value,
 				period: date,
 				responsable:responsable.value,
-				items: items.value,
+				items: items.value ?? [],
 				visitors: visitors.value
 			};
 
 			if (props.id != null) {
 				result = await visitStore.update(saveData);
-				return;
 			} else {
 				result = await visitStore.save(saveData);
 			}
@@ -88,7 +87,9 @@
 			}
 
 			toast.add({ severity: 'success', summary: 'Sua visita foi salva com sucesso', life: 5000 });
+			emit('update:visible', false);
 		} catch (e) {
+			debugger
 			error.value = e;
 			toast.add({ severity: 'error', summary: 'Não foi possível salvar a sua visita', detail: 'Por favor, verifique os campos ressaltados em vermelhor', life: 5000 });
 		}
@@ -100,9 +101,9 @@
 </script>
 
 <template>
+	<Toast/>
 	<Suspense>
 		<Dialog v-model:visible="visibleModel" modal header="Incluir/Editar Visita" :style="{ width: '75rem' }" @hide="resetForm" @show="fillForm">
-			<Toast/>
 			<div class="flex flex-col gap-4">
 				<span class="p-text-secondary">Insira as informações do item.</span>
 				<div class="grid grid-cols-2 gap-4">

@@ -5,28 +5,12 @@
 	import MultiSelect from 'primevue/multiselect'
 	import InputGroup from 'primevue/inputgroup'
 	import InputGroupAddon from 'primevue/inputgroupaddon'
-	import { useToast } from 'primevue/usetoast'
 	import { useCollectionStore } from '@/stores/collection'
 	import CollectionItem from '@/components/CollectionItem.vue'
-	import CollectionForm from '@/components/CollectionForm.vue'
 
 	const emit = defineEmits(['addItem'])
 
-	const toast = useToast()
-	const { items, updateItem } = useCollectionStore()
-
-	const editId = ref(null)
-	const visible = ref(false)
-
-	const editItem = (id) => {
-		editId.value = id
-		visible.value = true
-	}
-
-	const submitItem = (item) => {
-		updateItem(editId.value, item)
-		toast.add({ severity: 'success', summary: 'Sucesso', detail: 'Item atualizado.', life: 3000 })
-	}
+	const { items } = useCollectionStore()
 
 	const categories = ref([
 		{ name: 'Processadores e Memórias', code: 1 },
@@ -86,9 +70,7 @@
 				:name="item.name"
 				:category="item.category.name"
 				:img="item.img"
-				@editItem="editItem"
 			/>
-			<CollectionForm v-model:visible="visible" :id="editId" @submitItem="submitItem" />
 		</div>
 	</div>
 </template>

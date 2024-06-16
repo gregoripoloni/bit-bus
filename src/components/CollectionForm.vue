@@ -162,7 +162,7 @@
 
 <template>
 	<Toast />
-	<Dialog v-model:visible="visibleModel" modal header="Incluir item no acervo" :style="{ width: '75rem' }" @hide="resetForm" @show="fillForm">
+	<Dialog v-model:visible="visibleModel" modal :header="`${id ? 'Editar' : 'Incluir'} item no acervo`" :style="{ width: '1280px' }" @hide="resetForm" @show="fillForm">
 		<div class="flex flex-col gap-4">
 			<span class="p-text-secondary">Insira as informações do item.</span>
 			<Transition name="p-message">

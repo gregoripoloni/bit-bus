@@ -1,8 +1,12 @@
 <script setup>
-	import { computed } from 'vue'
+	import { ref, computed } from 'vue'
+	import Button from 'primevue/button'
 	import Image from 'primevue/image'
 	import Card from 'primevue/card'
 	import Panel from 'primevue/panel'
+	import { useToast } from 'primevue/usetoast'
+	import { useCollectionStore } from '@/stores/collection'
+	import CollectionForm from '@/components/CollectionForm.vue'
 
 	const props = defineProps({
 		item: Object
@@ -21,13 +25,26 @@
 			{ name: 'Nome do doador', value: props.item.donor }
 		]
 	})
+
+	const toast = useToast()
+	const { updateItem } = useCollectionStore()
+
+	const formVisible = ref(false)
+
+	const submitItem = (item) => {
+		updateItem(props.item.id, item)
+		toast.add({ severity: 'success', summary: 'Sucesso', detail: 'Item atualizado.', life: 3000 })
+	}
 </script>
 
 <template>
 	<Card #content>
 		<div class="flex flex-col gap-8 p-4">
 			<div>
-				<h1>{{ item.name }}</h1>
+				<h1 class="flex justify-between">
+					{{ item.name }}
+					<Button label="Editar" severity="secondary" @click="formVisible = true" />
+				</h1>
 				<p class="CollectionItemDetails-category">{{ item.category.name }}</p>
 			</div>
 			<div class="grid grid-cols-8 gap-8">
@@ -56,6 +73,7 @@
 				<a :href="item.links">{{ item.links }}</a>
 			</Panel>
 		</div>
+		<CollectionForm v-model:visible="formVisible" :id="item.id" @submitItem="submitItem" />
 	</Card>
 </template>
 

@@ -9,8 +9,6 @@
 		category: String,
 		img: String
 	})
-
-	const emit = defineEmits(['editItem'])
 </script>
 
 <template>
@@ -23,11 +21,10 @@
 		<template #title>{{ name }}</template>
 		<template #subtitle>{{ category }}</template>
 		<template #footer>
-			<div class="flex gap-3 mt-1">
+			<div class="flex mt-1">
 				<RouterLink :to="`/acervo/${id}`">
 					<Button label="Ver" severity="secondary" />
 				</RouterLink>
-				<Button label="Editar" severity="secondary" @click="emit('editItem', id)" />
 			</div>
 		</template>
 	</Card>

@@ -36,4 +36,8 @@
 		margin-top: auto;
 	}
 
+	.p-inputtextarea {
+		resize: vertical;
+	}
+
 }

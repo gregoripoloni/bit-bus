@@ -22,7 +22,7 @@
 		editId.value = id
 		visible.value = true
 	}
-	
+
 	const submitItem = (item) => {
 		updateItem(editId.value, item)
 		toast.add({ severity: 'success', summary: 'Sucesso', detail: 'Item atualizado.', life: 3000 })
@@ -66,12 +66,12 @@
 						<i class="pi pi-filter"></i>
 					</InputGroupAddon>
 					<MultiSelect
-						v-model="categoryFilter" 
-						:options="categories" 
-						optionLabel="name" 
-						placeholder="Categoria" 
-						:showToggleAll="false" 
-						:maxSelectedLabels="1" 
+						v-model="categoryFilter"
+						:options="categories"
+						optionLabel="name"
+						placeholder="Categoria"
+						:showToggleAll="false"
+						:maxSelectedLabels="1"
 						selectedItemsLabel="{0} categorias selecionadas"
 					/>
 				</InputGroup>

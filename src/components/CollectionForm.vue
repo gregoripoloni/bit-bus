@@ -131,10 +131,10 @@
 			img: image.value,
 			name: name.value,
 			category: category.value,
-			type: category.value && category.value.code == 2 ? type.value : null,
-			classification: category.value && category.value.code == 4 ? classification.value : null,
-			model: category.value && category.value.code == 5 ? model.value : null,
-			manufacturer: category.value && category.value.code == 5 ? manufacturer.value : null,
+			type: category.value?.code == 2 ? type.value : null,
+			classification: category.value?.code == 4 ? classification.value : null,
+			model: category.value?.code == 5 ? model.value : null,
+			manufacturer: category.value?.code == 5 ? manufacturer.value : null,
 			year: year.value ? year.value.getFullYear() : null,
 			quantity: quantity.value,
 			dimensions: dimensions.value,
@@ -180,19 +180,19 @@
 					<label>Categoria</label>
 					<Dropdown v-model="category" :invalid="invalidForm && invalidCategory" :options="categories" optionLabel="name" placeholder="Selecione uma categoria" />
 				</div>
-				<div v-if="category && category.code == 2" class="flex flex-col gap-2">
+				<div v-if="category?.code == 2" class="flex flex-col gap-2">
 					<label>Tipo</label>
 					<Dropdown v-model="type" :options="types" optionLabel="name" placeholder="Selecione um tipo" />
 				</div>
-				<div v-if="category && category.code == 4" class="flex flex-col gap-2">
+				<div v-if="category?.code == 4" class="flex flex-col gap-2">
 					<label>Classificação</label>
 					<Dropdown v-model="classification" :options="classifications" optionLabel="name" placeholder="Selecione uma classificação" />
 				</div>
-				<div v-if="category && category.code == 5" class="flex flex-col gap-2">
+				<div v-if="category?.code == 5" class="flex flex-col gap-2">
 					<label>Modelo</label>
 					<InputText v-model="model" />
 				</div>
-				<div v-if="category && category.code == 5" class="flex flex-col gap-2">
+				<div v-if="category?.code == 5" class="flex flex-col gap-2">
 					<label>Fabricante</label>
 					<InputText v-model="manufacturer" />
 				</div>
@@ -200,7 +200,7 @@
 					<label>Ano</label>
 					<Calendar v-model="year" view="year" dateFormat="yy" />
 				</div>
-				<div v-if="!category || category.code != 5" class="flex flex-col gap-2">
+				<div v-if="category?.code != 5" class="flex flex-col gap-2">
 					<label>Quantidade</label>
 					<InputNumber v-model="quantity" mode="decimal" showButtons :min="0" />
 				</div>

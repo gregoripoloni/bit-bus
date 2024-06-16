@@ -3,7 +3,7 @@
 	import { useRoute } from 'vue-router'
 	import { useCollectionStore } from '@/stores/collection'
 	import PageBreadcrumb from '@/components/PageBreadcrumb.vue'
-	import ItemDetails from '@/components/ItemDetails.vue'
+	import CollectionItemDetails from '@/components/CollectionItemDetails.vue'
 
 	const route = useRoute()
 
@@ -24,6 +24,6 @@
 <template>
 	<div v-if="$route.params.id" class="flex flex-col gap-4">
 		<PageBreadcrumb :items="breadcrumbItems" />
-		<ItemDetails :item />
+		<CollectionItemDetails :item />
 	</div>
 </template>

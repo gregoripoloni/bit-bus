@@ -5,16 +5,24 @@
 
 	const items = ref([
 		{
+			label: 'Início',
+			url: '/',
+			icon: 'pi pi-home'
+		},
+		{
 				label: 'Acervo',
-				url: '/acervo'
+				url: '/acervo',
+				icon: 'pi pi-objects-column'
 		},
 		{
 				label: 'Visitas',
-				url: '/visitas'
+				url: '/visitas',
+				icon: 'pi pi-map'
 		},
 		{
 				label: 'Doação',
-				url: '/doacao'
+				url: '/doacao',
+				icon: 'pi pi-wallet'
 		}
 	])
 </script>
@@ -22,13 +30,9 @@
 <template>
 	<nav class="NavBar">
 		<Menubar class="NavBar-menuBar" :model="items">
-				<template #start>
-					<RouterLink to="/" class="NavBar-logo">
-						<img src="@/assets/logo.png" />
-					</RouterLink>
-				</template>
 				<template #item="{ item }">
-					<RouterLink :to="item.url" class="NavBar-menuLink">
+					<RouterLink :to="item.url" class="NavBar-menuLink gap-2">
+						<span :class="item.icon" />
 						<span>{{ item.label }}</span>
 					</RouterLink>
 				</template>

@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import CollectionView from '@/views/CollectionView.vue'
-import ItemView from '@/views/ItemView.vue'
+import CollectionItemView from '@/views/CollectionItemView.vue'
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,7 +20,7 @@ const router = createRouter({
 				},
 				{
 					path: ':id',
-					component: ItemView
+					component: CollectionItemView
 				}
 			]
 		},

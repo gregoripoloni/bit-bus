@@ -19,5 +19,10 @@ export const useCollectionStore = defineStore('collection', () => {
 		return items.find(item => item.id === id)
 	}
 
-	return { items, addItem, updateItem, getItem }
+	const removeItem = (id) => {
+		const index = items.findIndex(i => i.id === id)
+		items.splice(index, 1)
+	}
+
+	return { items, addItem, updateItem, getItem, removeItem }
 })

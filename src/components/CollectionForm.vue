@@ -4,7 +4,6 @@
 	import Dialog from 'primevue/dialog'
 	import InputText from 'primevue/inputtext'
 	import Textarea from 'primevue/textarea'
-	import Toast from 'primevue/toast'
 	import InputNumber from 'primevue/inputnumber'
 	import Calendar from 'primevue/calendar'
 	import Dropdown from 'primevue/dropdown'
@@ -161,7 +160,6 @@
 </script>
 
 <template>
-	<Toast />
 	<Dialog v-model:visible="visibleModel" modal :header="`${id ? 'Editar' : 'Incluir'} item no acervo`" :style="{ width: '1280px' }" @hide="resetForm" @show="fillForm">
 		<div class="flex flex-col gap-4">
 			<span class="p-text-secondary">Insira as informações do item.</span>
@@ -225,8 +223,8 @@
 					<Textarea v-model="links" />
 				</div>
 			</div>
-			<div class="flex justify-content-end gap-2">
-				<Button type="button" label="Cancelar" severity="secondary" @click="visibleModel = false"></Button>
+			<div class="flex justify-end gap-2">
+				<Button type="button" label="Cancelar" severity="secondary" outlined @click="visibleModel = false"></Button>
 				<Button type="button" label="Salvar" @click="submit"></Button>
 			</div>
 		</div>

@@ -23,7 +23,7 @@
 		<template #footer>
 			<div class="flex mt-1">
 				<RouterLink :to="`/acervo/${id}`">
-					<Button label="Ver" severity="secondary" />
+					<Button label="Ver" severity="secondary" outlined />
 				</RouterLink>
 			</div>
 		</template>

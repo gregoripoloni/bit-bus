@@ -1,16 +1,24 @@
 <script setup>
 	import { ref, computed } from 'vue'
+	import { useRouter } from 'vue-router'
 	import Button from 'primevue/button'
 	import Image from 'primevue/image'
 	import Card from 'primevue/card'
 	import Panel from 'primevue/panel'
+	import ConfirmDialog from 'primevue/confirmdialog'
 	import { useToast } from 'primevue/usetoast'
+	import { useConfirm } from "primevue/useconfirm";
 	import { useCollectionStore } from '@/stores/collection'
 	import CollectionForm from '@/components/CollectionForm.vue'
 
 	const props = defineProps({
 		item: Object
 	})
+
+	const router = useRouter()
+	const toast = useToast()
+	const confirm = useConfirm();
+	const { updateItem, removeItem } = useCollectionStore()
 
 	const details = computed(() => {
 		return [
@@ -26,14 +34,28 @@
 		]
 	})
 
-	const toast = useToast()
-	const { updateItem } = useCollectionStore()
-
 	const formVisible = ref(false)
 
 	const submitItem = (item) => {
 		updateItem(props.item.id, item)
 		toast.add({ severity: 'success', summary: 'Sucesso', detail: 'Item atualizado.', life: 3000 })
+	}
+
+	const deleteItem = () => {
+		confirm.require({
+			message: 'Quer mesmo remover este item do acervo?',
+			header: 'Cuidado!',
+			icon: 'pi pi-info-circle',
+			rejectLabel: 'Cancelar',
+			rejectClass: 'p-button-secondary p-button-outlined',
+			acceptLabel: 'Remover',
+			acceptClass: 'p-button-danger',
+			accept: () => {
+				removeItem(props.item.id)
+				toast.add({ severity: 'success', summary: 'Sucesso', detail: 'Item removido.', life: 3000 })
+				router.push('/acervo')
+			}
+		})
 	}
 </script>
 
@@ -43,7 +65,10 @@
 			<div>
 				<h1 class="flex justify-between">
 					{{ item.name }}
-					<Button label="Editar" severity="secondary" @click="formVisible = true" />
+					<div class="flex gap-3">
+						<Button label="Editar" severity="secondary" outlined @click="formVisible = true" />
+						<Button icon="pi pi-trash" severity="danger" outlined @click="deleteItem" />
+					</div>
 				</h1>
 				<p class="CollectionItemDetails-category">{{ item.category.name }}</p>
 			</div>
@@ -74,6 +99,7 @@
 			</Panel>
 		</div>
 		<CollectionForm v-model:visible="formVisible" :id="item.id" @submitItem="submitItem" />
+		<ConfirmDialog></ConfirmDialog>
 	</Card>
 </template>
 

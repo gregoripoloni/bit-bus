@@ -166,9 +166,17 @@
 			<Transition name="p-message">
 					<Message v-if="invalidForm && (invalidName || invalidCategory)" severity="error" :closable="false">Preencha os campos obrigatórios.</Message>
 			</Transition>
-			<div class="grid grid-cols-2 gap-4">
-				<div class="col-span-2">
-					<FileUpload class="col-span-2" chooseLabel="Enviar imagem" mode="basic" accept="image/*" @select="uploadImage" />
+			<div class="grid grid-cols-3 gap-4">
+				<div class="col-span-3">
+					<FileUpload
+						class="p-button-secondary p-button-outlined"
+						uploadIcon="pi pi-images"
+						chooseIcon="pi pi-images"
+						chooseLabel="Enviar imagem"
+						mode="basic"
+						accept="image/*"
+						@select="uploadImage"
+					/>
 				</div>
 				<div class="flex flex-col gap-2">
 					<label>Nome</label>
@@ -214,13 +222,13 @@
 					<label>Nome do doador</label>
 					<InputText v-model="donor" />
 				</div>
-				<div class="flex flex-col gap-2 col-span-2">
+				<div class="flex flex-col gap-2 col-span-3">
 					<label>Descrição</label>
-					<Textarea v-model="description" />
+					<Textarea v-model="description" class="h-40" />
 				</div>
-				<div class="flex flex-col gap-2 col-span-2">
+				<div class="flex flex-col gap-2 col-span-3">
 					<label>Links</label>
-					<Textarea v-model="links" />
+					<Textarea v-model="links" class="h-20" />
 				</div>
 			</div>
 			<div class="flex justify-end gap-2">

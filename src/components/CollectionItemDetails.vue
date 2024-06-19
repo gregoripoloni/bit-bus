@@ -73,16 +73,7 @@
 				<p class="CollectionItemDetails-category">{{ item.category.name }}</p>
 			</div>
 			<div class="grid grid-cols-8 gap-8">
-				<div class="col-span-6 grid grid-cols-4 gap-8 h-fit">
-					<div v-for="detail in details.filter(detail => detail.value)" :key="detail.name" class="flex flex-col gap-1">
-						<p class="CollectionItemDetails-label">{{ detail.name }}</p>
-						<p>{{ detail.value }}</p>
-					</div>
-				</div>
-				<Image v-if="item.img" class="col-span-2" preview>
-					<template #indicatoricon>
-						<i class="pi pi-search"></i>
-					</template>
+				<Image v-if="item.img" class="col-span-2 CollectionItemDetails-imageContainer" preview>
 					<template #image>
 						<img class="CollectionItemDetails-image" :src="item.img" />
 					</template>
@@ -90,11 +81,19 @@
 						<img :src="item.img" alt="preview" :style="slotProps.style" />
 					</template>
 				</Image>
+				<Panel v-if="item.description" header="Descrição" class="col-span-6">
+					<p>{{ item.description }}</p>
+				</Panel>
 			</div>
-			<Panel v-if="item.description" header="Descrição" toggleable>
-				<p>{{ item.description }}</p>
+			<Panel header="Detalhes">
+				<div class="grid grid-cols-4 gap-8">
+					<div v-for="detail in details.filter(detail => detail.value)" :key="detail.name" class="flex flex-col gap-1">
+						<p class="CollectionItemDetails-label">{{ detail.name }}</p>
+						<p>{{ detail.value }}</p>
+					</div>
+				</div>
 			</Panel>
-			<Panel v-if="item.links" header="Links" toggleable>
+			<Panel v-if="item.links" header="Links">
 				<a :href="item.links">{{ item.links }}</a>
 			</Panel>
 		</div>
@@ -104,8 +103,13 @@
 </template>
 
 <style scoped>
+	.CollectionItemDetails-imageContainer {
+		border-radius: 6px;
+		overflow: hidden;
+		border: 1px solid var(--surface-border);
+	}
+
 	.CollectionItemDetails-image {
-		border-radius: 8px;
 		width: 100%;
 		aspect-ratio: 1;
 		object-fit: cover;

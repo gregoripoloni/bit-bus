@@ -2,7 +2,7 @@
 	import { ref } from 'vue';
 	import VisitItem from '@/components/VisitItem.vue'
 	import VisitForm from '@/components/VisitForm.vue';
-	import VisitorDialog from '@/components/VisitorDialog.vue';
+	import VisitorDialog from '@/components/VisitorModal.vue';
 	
 	const props = defineProps({
 		items: Array

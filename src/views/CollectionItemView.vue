@@ -1,29 +1,30 @@
 <script setup>
-	import { computed } from 'vue'
+	import { computed, onActivated, onDeactivated } from 'vue'
 	import { useRoute } from 'vue-router'
 	import { useCollectionStore } from '@/stores/collection'
 	import PageBreadcrumb from '@/components/PageBreadcrumb.vue'
 	import CollectionItemDetails from '@/components/CollectionItemDetails.vue'
 
 	const route = useRoute()
+	const { item, getItem, resetItem } = useCollectionStore()
 
-	const { getItem } = useCollectionStore()
-
-	const item = computed(() => {
-		return route.params.id ? getItem(parseInt(route.params.id)) : undefined
+	onActivated(() => {
+		getItem(route.params.id)
 	})
+
+	onDeactivated(resetItem)
 
 	const breadcrumbItems = computed(() => {
 		return [
 			{ label: 'Acervo', route: '/acervo' },
-			{ label: item.value ? item.value.name : undefined }
+			{ label: item.data?.name }
 		]
 	})
 </script>
 
 <template>
-	<div v-if="$route.params.id" class="flex flex-col gap-4">
+	<div v-if="item.data" class="flex flex-col gap-4">
 		<PageBreadcrumb :items="breadcrumbItems" />
-		<CollectionItemDetails :item />
+		<CollectionItemDetails :item="item.data" />
 	</div>
 </template>

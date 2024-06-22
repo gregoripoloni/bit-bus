@@ -4,7 +4,7 @@
 	import Button from 'primevue/button'
 
 	defineProps({
-		id: Number,
+		id: String,
 		name: String,
 		category: String,
 		img: String

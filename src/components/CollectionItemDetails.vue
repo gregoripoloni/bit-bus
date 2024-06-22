@@ -36,8 +36,8 @@
 
 	const formVisible = ref(false)
 
-	const submitItem = (item) => {
-		updateItem(props.item.id, item)
+	const submitItem = async (item) => {
+		await updateItem(props.item.id, item)
 		toast.add({ severity: 'success', summary: 'Sucesso', detail: 'Item atualizado.', life: 3000 })
 	}
 
@@ -50,8 +50,8 @@
 			rejectClass: 'p-button-secondary p-button-outlined',
 			acceptLabel: 'Remover',
 			acceptClass: 'p-button-danger',
-			accept: () => {
-				removeItem(props.item.id)
+			accept: async () => {
+				await removeItem(props.item.id)
 				toast.add({ severity: 'success', summary: 'Sucesso', detail: 'Item removido.', life: 3000 })
 				router.push('/acervo')
 			}

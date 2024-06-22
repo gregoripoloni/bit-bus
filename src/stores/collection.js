@@ -1,28 +1,40 @@
-import { ref, reactive } from 'vue'
+import { reactive } from 'vue'
 import { defineStore } from 'pinia'
 
+import CollectionAPIClient from '@/API/CollectionAPIClient'
+
 export const useCollectionStore = defineStore('collection', () => {
-	const currentId = ref(1)
-	const items = reactive([])
+	const APIClient = new CollectionAPIClient()
 
-	const addItem = (item) => {
-		items.push({ id: currentId.value, ...item })
-		currentId.value++
+	const items = reactive({ data: [] })
+	const item = reactive({ data: null })
+
+	const getItems = async () => {
+		items.data = await APIClient.getAll()
 	}
 
-	const updateItem = (id, item) => {
-		const index = items.findIndex(i => i.id === id)
-		items[index] = { id: id, ...item }
+	const addItem = async (item) => {
+		await APIClient.save(item)
+		getItems()
 	}
 
-	const getItem = (id) => {
-		return items.find(item => item.id === id)
+	const updateItem = async (id, item) => {
+		await APIClient.update({ id, ...item })
+		getItem(id)
 	}
 
-	const removeItem = (id) => {
-		const index = items.findIndex(i => i.id === id)
-		items.splice(index, 1)
+	const getItem = async (id) => {
+		item.data = await APIClient.getById(id)
 	}
 
-	return { items, addItem, updateItem, getItem, removeItem }
+	const resetItem = () => {
+		item.data = null
+	}
+
+	const removeItem = async (id) => {
+		await APIClient.delete(id)
+		getItems()
+	}
+
+	return { items, item, getItems, getItem, resetItem, addItem, updateItem, removeItem }
 })

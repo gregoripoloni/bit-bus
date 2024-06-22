@@ -1,11 +1,15 @@
 <script setup>
-	import { ref } from 'vue'
+	import { ref, onActivated } from 'vue'
+	import PageBreadcrumb from '@/components/PageBreadcrumb.vue'
 	import CollectionList from '@/components/CollectionList.vue'
 	import CollectionForm from '@/components/CollectionForm.vue'
 	import { useToast } from 'primevue/usetoast'
 	import { useCollectionStore } from '@/stores/collection'
-	import PageBreadcrumb from '@/components/PageBreadcrumb.vue'
-	
+
+	const { getItems } = useCollectionStore()
+
+	onActivated(getItems)
+
 	const breadcrumbItems = ref([
 		{ label: 'Acervo' }
 	])
@@ -15,8 +19,8 @@
 	const toast = useToast()
 	const { addItem } = useCollectionStore()
 
-	const submitItem = (item) => {
-		addItem(item)
+	const submitItem = async (item) => {
+		await addItem(item)
 		toast.add({ severity: 'success', summary: 'Sucesso', detail: 'Item cadastrado no acervo.', life: 3000 })
 	}
 </script>

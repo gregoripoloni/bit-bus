@@ -10,10 +10,11 @@
 	import FileUpload from 'primevue/fileupload'
 	import Message from 'primevue/message'
 	import { useCollectionStore } from '@/stores/collection'
+	import { categoriesModel, typesModel, classificationsModel } from '@/utils/models'
 
 	const props = defineProps({
 		visible: Boolean,
-		id: Number
+		id: String
 	})
 
 	const emit = defineEmits(['update:visible', 'submitItem'])
@@ -27,30 +28,9 @@
 		}
 	})
 
-	const categories = ref([
-		{ name: 'Processadores e Memórias', code: 1 },
-		{ name: 'Periféricos e Discos Removíveis', code: 2 },
-		{ name: 'Servidores (Tower/físico)', code: 3 },
-		{ name: 'Placas', code: 4 },
-		{ name: 'Telefone', code: 5 }
-	])
-
-	const types = ref([
-		{ name: 'Mídia', code: 1 },
-		{ name: 'Dispositivo', code: 2 },
-		{ name: 'Protótipo', code: 3 },
-		{ name: 'Mouse', code: 4 },
-		{ name: 'Teclado', code: 5 },
-		{ name: 'Dispositivo de Entrada', code: 6 },
-		{ name: 'Dispositivo de Armazenamento', code: 7 },
-		{ name: 'Dispositivo de Saída', code: 8 }
-	])
-
-	const classifications = ref([
-		{ name: 'ATX', code: 1 },
-		{ name: 'Micro-ATX', code: 2 },
-		{ name: 'Mini-ATX', code: 3 }
-	])
+	const categories = ref(categoriesModel)
+	const types = ref(typesModel)
+	const classifications = ref(classificationsModel)
 
 	const image = ref(null)
 	const name = ref(null)
@@ -95,29 +75,27 @@
 		invalidForm.value = false
 	}
 
-	const { getItem } = useCollectionStore()
+	const { item } = useCollectionStore()
 
-	const fillForm = () => {
+	const fillForm = async () => {
 		if (props.id === undefined) {
 			return
 		}
 
-		const item = getItem(props.id)
-
-		image.value = item.img
-		name.value = item.name
-		category.value = item.category
-		type.value = item.type
-		classification.value = item.classification
-		model.value =item.model
-		manufacturer.value = item.manufacturer
-		year.value = item.year ? new Date(item.year, 1, 1) : null
-		quantity.value = item.quantity
-		dimensions.value = item.dimensions
-		local.value = item.local
-		donor.value = item.donor
-		description.value = item.description
-		links.value = item.links
+		image.value = item.data.img
+		name.value = item.data.name
+		category.value = item.data.category
+		type.value = item.data.type
+		classification.value = item.data.classification
+		model.value =item.data.model
+		manufacturer.value = item.data.manufacturer
+		year.value = item.data.year ? new Date(item.data.year, 1, 1) : null
+		quantity.value = item.data.quantity
+		dimensions.value = item.data.dimensions
+		local.value = item.data.local
+		donor.value = item.data.donor
+		description.value = item.data.description
+		links.value = item.data.links
 	}
 
 	const submit = () => {

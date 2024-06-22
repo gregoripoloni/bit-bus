@@ -7,24 +7,19 @@
 	import InputGroupAddon from 'primevue/inputgroupaddon'
 	import { useCollectionStore } from '@/stores/collection'
 	import CollectionItem from '@/components/CollectionItem.vue'
+	import { categoriesModel } from '@/utils/models'
 
 	const emit = defineEmits(['addItem'])
 
 	const { items } = useCollectionStore()
 
-	const categories = ref([
-		{ name: 'Processadores e Memórias', code: 1 },
-		{ name: 'Periféricos e Discos Removíveis', code: 2 },
-		{ name: 'Servidores (Tower/físico)', code: 3 },
-		{ name: 'Placas', code: 4 },
-		{ name: 'Telefone', code: 5 }
-	])
+	const categories = ref(categoriesModel)
 
 	const nameFilter = ref('')
 	const categoryFilter = ref([])
 
 	const filteredItems = computed(() => {
-		let filteredItems = items
+		let filteredItems = items.data
 		if (nameFilter.value) {
 			filteredItems = filteredItems.filter(item => item.name.search(nameFilter.value) >= 0)
 		}

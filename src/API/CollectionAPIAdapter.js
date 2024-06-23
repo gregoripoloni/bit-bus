@@ -1,20 +1,18 @@
-import { getCategoryByCode, getCategoryByName, getClassificationByCode } from "@/utils/models"
+import { getCategoryByCode, getTypeByCode, getClassificationByCode } from "@/utils/models"
 
 export const convertToApi = (item) => {
 	return {
 		id: item.id ?? null,
-		name: item.name, // Mudar para name
-		category: item.category.code, // Mudar para int
-		type: item.type ?? 0, // Adicionar
-		classification: item.classification ?? 0,
-		model: item.model ?? '', // Adicionar
+		name: item.name,
+		category: item.category?.code ?? 0,
+		// type: item.type?.code ?? 0,
+		classification: item.classification?.code ?? 0,
+		// model: item.model ?? '',
 		manufacturer: item.manufacturer ?? '',
 		year: item.year ?? 0,
 		quantity: Number(item.quantity) ?? 0,
 		information: item.description ?? '',
-		dimenstions: item.dimenstions, // Adicionar
-		// height: 100, // Remover
-		// width: 50, // Remover
+		dimensions: item.dimensions ?? '',
 		picture: item.img ? [
 			item.img
 		] : [],
@@ -22,8 +20,7 @@ export const convertToApi = (item) => {
 			item.links
 		] : [],
 		storagePlace: item.local ?? '',
-		donerName: item.donor ?? '',
-		donationDate: new Date().toISOString().split('T')[0] // Remover
+		donerName: item.donor ?? ''
 	}
 }
 
@@ -32,12 +29,15 @@ export const convertToStore = (item) => {
 		id: item.id,
 		name: item.name,
 		category: item.category ? getCategoryByCode(item.category) : null,
+		// type: item.type ? getTypeByCode(item.type) : null,
 		classification: item.classification ? getClassificationByCode(item.classification) : null,
+		// model: item.model,
 		manufacturer: item.manufacturer,
 		dimenstions: item.dimenstions,
 		year: item.year,
 		quantity: item.quantity,
 		description: item.information,
+		dimensions: item.dimensions,
 		img: item.picture ? item.picture[0] : '',
 		links: item.links ? item.links[0] : '',
 		local: item.storagePlace,

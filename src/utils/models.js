@@ -27,6 +27,10 @@ export const getCategoryByName = (name) => {
 	return categoriesModel.find(category => category.name == name)
 }
 
+export const getCategoryByCode = (code) => {
+	return categoriesModel.find(category => category.code == code)
+}
+
 export const getClassificationByCode = (code) => {
 	return classificationsModel.find(classification => classification.code == code)
 }

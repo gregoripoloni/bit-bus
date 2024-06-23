@@ -3,6 +3,7 @@
 	import VisitItem from '@/components/VisitItem.vue'
 	import VisitForm from '@/components/VisitForm.vue';
 	import VisitorDialog from '@/components/VisitorModal.vue';
+	import OpinionAPIClient from '@/API/OpinionAPIClient';
 	
 	const props = defineProps({
 		items: Array
@@ -12,12 +13,25 @@
 	const visible = ref(false);
 	const visitors = ref([]);
 	const visibleVisitorDialog = ref(false);
+	const opinionApiClient = new OpinionAPIClient();
 
-	const onViewVisitors = (id) => {
+	const onViewVisitors = async (id) => {
+		let opinions = await opinionApiClient.getAll();
+
 		editId.value = id;
 		visitors.value = props.items.find(x => x.id == id);
 		visitors.value = visitors.value.visitors;
+
+		visitors.value.map((item) => {
+			item.opinion = opinions.find(x => x.visitorId == item.id);
+			return item;
+		});
+
 		visibleVisitorDialog.value = true;
+	}
+
+	const formatDate = (period) => {
+		return (new Date(period)).toLocaleDateString()
 	}
 
 	const editItem = (id) => {
@@ -33,7 +47,7 @@
 				:key="item.id"
 				:id="item.id"
 				:place="item.place"
-				:period="item.period"
+				:period="formatDate(item.period)"
 				:responsable="item.responsable"
 				:totalVisitors="item.visitors.length"
 				@editItem="editItem"

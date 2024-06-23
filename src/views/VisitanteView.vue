@@ -1,22 +1,30 @@
 <script setup>
 	import Button from 'primevue/button'
-	import { ref } from 'vue';
+	import { onMounted, ref } from 'vue';
 	import { useRoute } from 'vue-router';
 	import InputText from 'primevue/inputtext';
 	import Textarea from 'primevue/textarea';
 	import VisitsAPIClient from '@/API/VisitsAPIClient';
 	import { useToast } from 'primevue/usetoast';
 	import Toast from 'primevue/toast';
+	import OpinionAPIClient from '@/API/OpinionAPIClient';
 
 	const toast = useToast();
 
 	const route = useRoute();
 	const visitsApiClient = new VisitsAPIClient();
+	const opinionApiClient = new OpinionAPIClient();
 
 	const name = ref('');
 	const email = ref('');
+	const link = ref('');
 	const id = ref(route.query.id);
 	const comment = ref('');
+	const visit = ref('');
+
+	onMounted(async () => {
+		 visit.value = await visitsApiClient.getById(id.value);
+	});
 
 	const submit = async () => {
 		if (name.value == '') {
@@ -37,6 +45,15 @@
 
 			let visitor = JSON.parse(error);
 
+			if (comment.value) {
+				await opinionApiClient.addOpinion({
+					visitId: id.value,
+					visitorId: visitor.id,
+					comment: comment.value,
+					socialMedia: link.value
+				});
+			}
+
 			toast.add({ severity: 'success', summary: 'Sua presença foi salva com sucesso', life: 5000 });
 
 			name.value = '';
@@ -50,8 +67,9 @@
 <template>
 	<Toast/>
 	<div class="flex flex-col gap-4 justify-center w-full align-center text-center">
+		<h1 class="p-text-secondary">Visita em {{ visit.place }} - {{ visit.period }}</h1>
 		<div class="w-full text-center">
-			<h1 class="p-text-secondary">Registre sua Presença</h1>
+			<h2 class="p-text-secondary">Registre sua Presença</h2>
 		</div>
 		<div class="flex justify-center">
 			<div class="flex flex-col w gap-2 w-1/2 text-left">
@@ -69,6 +87,12 @@
 			<div class="flex flex-col w gap-2 w-1/2 text-left h-60">
 				<label>Escreva um comentário sobre a sua visita</label>
 				<Textarea type="text" class="col-span-2 h-60" v-model="comment" />
+			</div>
+		</div>
+		<div class="flex justify-center">
+			<div class="flex flex-col w gap-2 w-1/2 text-left h-60">
+				<label>Link da sua rede social</label>
+				<InputText type="text" class="col-span-2" v-model="link"/>
 			</div>
 		</div>
 		<div class="flex justify-end w-full gap-2">

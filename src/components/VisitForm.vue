@@ -8,6 +8,8 @@
 	import Toast from 'primevue/toast';
 	import { useToast } from 'primevue/usetoast';
 	import APIError from '@/API/APIError';
+	import CollectionListPicker from './CollectionListPicker.vue';
+	import { convertToApi } from '@/API/CollectionAPIAdapter';
 
 	const props = defineProps({
 		visible: Boolean,
@@ -31,16 +33,17 @@
 	const place = ref();
 	const period = ref('');
 	const responsable = ref();
-	const items = ref();
+	const items = ref([]);
 	const visitors = ref([]);
 	let error = ref(new APIError());
 
 	const fillForm = async () => {
 		let result = await visitStore.getById(props.id);
 		place.value = result.place;
-		period.value = result.period;
+		period.value = (new Date(result.period)).toLocaleDateString();
 		responsable.value = result.responsable;
 		visitors.value = result.visitors;
+		items.value = result.items;
 	}
 
 	const resetForm = () => {
@@ -50,18 +53,23 @@
 		items.value = [];
 	}
 
+	const updateItemList = (item) => {
+		if (items.value.find((i) => i.id == item.id)) {
+			items.value = items.value.filter((i) => i.id != item.id);
+		} else {
+			items.value.push(convertToApi(item));
+		}
+	}
+
 	const submit = async () => {
 		let date = '';
 		if (typeof period.value != 'object') {
-			date = new Date(period.value?.split('/').reverse().join('/'));
+			date = (new Date(period.value?.split('/').reverse().join('/'))).toISOString().split('T')[0];
 		}
 
 		if (period.value != 'Invalid Date' && typeof period.value == 'object') {
-			date = period.value?.toLocaleDateString();
-		} else {
-			date = '';
+			date = period.value?.toISOString().split('T')[0];
 		}
-
 
 		try {
 			let result;
@@ -122,6 +130,10 @@
 				</div>
 				<div>
 					<label>Itens da visita</label>
+					<CollectionListPicker
+						:selectedItems="items"
+						@updateItem="(item) => updateItemList(item)"
+					/>
 				</div>
 				<div class="grid grid-cols-4 gap-4"></div>
 				<div class="flex justify-content-end gap-2">

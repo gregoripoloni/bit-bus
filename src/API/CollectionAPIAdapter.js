@@ -1,17 +1,18 @@
-import { getCategoryByName, getClassificationByCode } from "@/utils/models"
+import { getCategoryByCode, getCategoryByName, getClassificationByCode } from "@/utils/models"
 
 export const convertToApi = (item) => {
 	return {
-		code: item.name, // Mudar para name
-		category: item.category.name, // Mudar para int
-		// type: item.type ?? 0, // Adicionar
+		id: item.id ?? null,
+		name: item.name, // Mudar para name
+		category: item.category.code, // Mudar para int
+		type: item.type ?? 0, // Adicionar
 		classification: item.classification ?? 0,
-		// model: item.model ?? '', // Adicionar
+		model: item.model ?? '', // Adicionar
 		manufacturer: item.manufacturer ?? '',
 		year: item.year ?? 0,
 		quantity: Number(item.quantity) ?? 0,
 		information: item.description ?? '',
-		// dimenstions: item.dimenstions, // Adicionar
+		dimenstions: item.dimenstions, // Adicionar
 		// height: 100, // Remover
 		// width: 50, // Remover
 		picture: item.img ? [
@@ -29,10 +30,11 @@ export const convertToApi = (item) => {
 export const convertToStore = (item) => {
 	return {
 		id: item.id,
-		name: item.code,
-		category: item.category ? getCategoryByName(item.category) : null,
+		name: item.name,
+		category: item.category ? getCategoryByCode(item.category) : null,
 		classification: item.classification ? getClassificationByCode(item.classification) : null,
 		manufacturer: item.manufacturer,
+		dimenstions: item.dimenstions,
 		year: item.year,
 		quantity: item.quantity,
 		description: item.information,

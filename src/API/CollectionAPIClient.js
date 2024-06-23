@@ -37,7 +37,7 @@ class CollectionAPIClient extends APIClient {
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ id: item.id, ...convertToApi(item) })
+			body: JSON.stringify(convertToApi(item))
 		})
 		return await result.json()
 	}

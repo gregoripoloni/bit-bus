@@ -29,14 +29,13 @@ class LectureAPIClient extends APIClient {
 	}
 
 	async update(item) {
-		let result = await fetch(this.getURL(), {
+		await fetch(this.getURL(), {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify(item)
 		})
-		return await result.json()
 	}
 
 	async delete(id) {

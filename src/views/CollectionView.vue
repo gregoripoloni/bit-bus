@@ -6,7 +6,8 @@
 	import { useToast } from 'primevue/usetoast'
 	import { useCollectionStore } from '@/stores/collection'
 
-	const { getItems } = useCollectionStore()
+	const toast = useToast()
+	const { getItems, addItem } = useCollectionStore()
 
 	onActivated(getItems)
 
@@ -15,9 +16,6 @@
 	])
 
 	const visible = ref(false)
-
-	const toast = useToast()
-	const { addItem } = useCollectionStore()
 
 	const submitItem = async (item) => {
 		await addItem(item)

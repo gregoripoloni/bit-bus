@@ -20,6 +20,11 @@
 				icon: 'pi pi-map'
 		},
 		{
+				label: 'Palestras',
+				url: '/palestras',
+				icon: 'pi pi-address-book'
+		},
+		{
 				label: 'Doação',
 				url: '/doacao',
 				icon: 'pi pi-wallet'

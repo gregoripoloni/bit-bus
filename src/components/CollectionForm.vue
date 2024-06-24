@@ -87,7 +87,7 @@
 		category.value = item.data.category
 		type.value = item.data.type
 		classification.value = item.data.classification
-		model.value =item.data.model
+		model.value = item.data.model
 		manufacturer.value = item.data.manufacturer
 		year.value = item.data.year ? new Date(item.data.year, 1, 1) : null
 		quantity.value = item.data.quantity

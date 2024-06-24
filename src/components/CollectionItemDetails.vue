@@ -7,7 +7,7 @@
 	import Panel from 'primevue/panel'
 	import ConfirmDialog from 'primevue/confirmdialog'
 	import { useToast } from 'primevue/usetoast'
-	import { useConfirm } from "primevue/useconfirm";
+	import { useConfirm } from 'primevue/useconfirm'
 	import { useCollectionStore } from '@/stores/collection'
 	import CollectionForm from '@/components/CollectionForm.vue'
 

@@ -9,6 +9,7 @@
 	import { useConfirm } from 'primevue/useconfirm'
 	import { useLectureStore } from '@/stores/lecture'
 	import LectureForm from '@/components/LectureForm.vue'
+	import { parseToBrFormat } from '@/utils/dates'
 
 	const props = defineProps({
 		lecture: Object
@@ -23,7 +24,7 @@
 		return [
 			{ name: 'Palestrante', value: props.lecture.person },
 			{ name: 'Local', value: props.lecture.local },
-			{ name: 'Data e hora', value: props.lecture.datetime },
+			{ name: 'Data e hora', value: parseToBrFormat(props.lecture.datetime) },
 			{ name: 'Duração', value: props.lecture.duration }
 		]
 	})
@@ -65,7 +66,7 @@
 					</div>
 				</h1>
 			</div>
-			<Panel v-if="lecture.brief" header="Resumo da palestra">
+			<Panel header="Resumo da palestra">
 				<p>{{ lecture.brief }}</p>
 			</Panel>
 			<Panel header="Detalhes">
@@ -76,7 +77,7 @@
 					</div>
 				</div>
 			</Panel>
-			<Panel v-if="lecture.resume" header="Currículo do palestrante">
+			<Panel header="Currículo do palestrante">
 				<p>{{ lecture.resume }}</p>
 			</Panel>
 		</div>

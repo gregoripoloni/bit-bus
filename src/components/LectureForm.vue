@@ -7,6 +7,7 @@
 	import Calendar from 'primevue/calendar'
 	import Message from 'primevue/message'
 	import { useLectureStore } from '@/stores/lecture'
+	import { parseDateToString, parseStringToDate } from '@/utils/dates'
 
 	const props = defineProps({
 		visible: Boolean,
@@ -32,14 +33,9 @@
 	const resume = ref(null)
 	const brief = ref(null)
 
-	const invalidTitle = computed(() => {
-		return !title.value
+	const invalidFields = computed(() => {
+		return !title.value || !person.value || !local.value || !datetime.value || !duration.value || !resume.value || !brief.value
 	})
-
-	const invalidPerson = computed(() => {
-		return !person.value
-	})
-
 	const invalidForm = ref(false)
 
 	const resetForm = () => {
@@ -63,14 +59,14 @@
 		title.value = lecture.data.title
 		person.value = lecture.data.person
 		local.value = lecture.data.local
-		datetime.value = lecture.data.datetime
+		datetime.value = parseStringToDate(lecture.data.datetime)
 		duration.value = lecture.data.duration
 		resume.value = lecture.data.resume
 		brief.value = lecture.data.brief
 	}
 
 	const submit = () => {
-		if (invalidTitle.value || invalidPerson.value) {
+		if (invalidFields.value) {
 			invalidForm.value = true
 			return
 		}
@@ -79,7 +75,7 @@
 			title: title.value,
 			person: person.value,
 			local: local.value,
-			datetime: datetime.value,
+			datetime: parseDateToString(datetime.value),
 			duration: duration.value,
 			resume: resume.value,
 			brief: brief.value
@@ -94,37 +90,36 @@
 		<div class="flex flex-col gap-4">
 			<span class="p-text-secondary">Insira as informações da palestra.</span>
 			<Transition name="p-message">
-					<Message v-if="invalidForm && (invalidTitle || invalidPerson)" severity="error" :closable="false">Preencha os campos obrigatórios.</Message>
+					<Message v-if="invalidForm && invalidFields" severity="error" :closable="false">Preencha os campos obrigatórios.</Message>
 			</Transition>
 			<div class="grid grid-cols-3 gap-4">
 				<div class="flex flex-col gap-2">
 					<label>Título</label>
-					<InputText v-model="title" :invalid="invalidForm && invalidTitle" />
+					<InputText v-model="title" :invalid="invalidForm && !title" />
 				</div>
 				<div class="flex flex-col gap-2">
 					<label>Palestrante</label>
-					<InputText v-model="person" :invalid="invalidForm && invalidPerson" />
+					<InputText v-model="person" :invalid="invalidForm && !person" />
 				</div>
 				<div class="flex flex-col gap-2">
 					<label>Local</label>
-					<InputText v-model="local" />
+					<InputText v-model="local" :invalid="invalidForm && !local" />
 				</div>
 				<div class="flex flex-col gap-2">
 					<label>Data e hora</label>
-					<!-- <Calendar v-model="datetime" view="year" dateFormat="yy" /> -->
-					<InputText v-model="datetime" />
+					<Calendar v-model="datetime" showTime hourFormat="24" dateFormat="dd/mm/yy" :invalid="invalidForm && !datetime" />
 				</div>
 				<div class="flex flex-col gap-2">
-					<label>Duração (horas)</label>
-					<InputText v-model="duration" />
+					<label>Duração</label>
+					<InputText v-model="duration" :invalid="invalidForm && !duration" />
 				</div>
 				<div class="flex flex-col gap-2 col-span-3">
 					<label>Currículo do palestrante</label>
-					<Textarea v-model="resume" class="h-28" />
+					<Textarea v-model="resume" class="h-28" :invalid="invalidForm && !resume" />
 				</div>
 				<div class="flex flex-col gap-2 col-span-3">
 					<label>Resumo da palestra</label>
-					<Textarea v-model="brief" class="h-28" />
+					<Textarea v-model="brief" class="h-28" :invalid="invalidForm && !brief" />
 				</div>
 			</div>
 			<div class="flex justify-end gap-2">

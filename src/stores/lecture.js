@@ -10,6 +10,7 @@ export const useLectureStore = defineStore('lecture', () => {
 	const lecture = reactive({ data: null })
 
 	const loadingLectures = ref(false)
+	const loadingLecture = ref(false)
 
 	const getLectures = async () => {
 		loadingLectures.value = true
@@ -28,7 +29,9 @@ export const useLectureStore = defineStore('lecture', () => {
 	}
 
 	const getLecture = async (id) => {
+		loadingLecture.value = true
 		lecture.data = await APIClient.getById(id)
+		loadingLecture.value = false
 	}
 
 	const resetLecture = () => {
@@ -40,5 +43,5 @@ export const useLectureStore = defineStore('lecture', () => {
 		getLectures()
 	}
 
-	return { lectures, lecture, getLectures, getLecture, resetLecture, addLecture, updateLecture, removeLecture, loadingLectures }
+	return { lectures, lecture, getLectures, getLecture, resetLecture, addLecture, updateLecture, removeLecture, loadingLectures, loadingLecture }
 })

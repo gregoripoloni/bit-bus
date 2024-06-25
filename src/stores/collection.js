@@ -10,6 +10,7 @@ export const useCollectionStore = defineStore('collection', () => {
 	const item = reactive({ data: null })
 
 	const loadingItems = ref(false)
+	const loadingItem = ref(false)
 
 	const getItems = async () => {
 		loadingItems.value = true
@@ -28,7 +29,9 @@ export const useCollectionStore = defineStore('collection', () => {
 	}
 
 	const getItem = async (id) => {
+		loadingItem.value = true
 		item.data = await APIClient.getById(id)
+		loadingItem.value = false
 	}
 
 	const resetItem = () => {
@@ -40,5 +43,5 @@ export const useCollectionStore = defineStore('collection', () => {
 		getItems()
 	}
 
-	return { items, item, getItems, getItem, resetItem, addItem, updateItem, removeItem, loadingItems }
+	return { items, item, getItems, getItem, resetItem, addItem, updateItem, removeItem, loadingItems, loadingItem }
 })

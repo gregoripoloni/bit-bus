@@ -1,5 +1,6 @@
 import '@/assets/base.css'
 import '@/assets/main.css'
+import '@/assets/animations.css'
 
 import 'primevue/resources/themes/aura-light-green/theme.css'
 import 'primeicons/primeicons.css'

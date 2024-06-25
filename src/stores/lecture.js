@@ -1,4 +1,4 @@
-import { reactive } from 'vue'
+import { ref, reactive } from 'vue'
 import { defineStore } from 'pinia'
 
 import LectureAPIClient from '@/API/LectureAPIClient'
@@ -9,8 +9,12 @@ export const useLectureStore = defineStore('lecture', () => {
 	const lectures = reactive({ data: [] })
 	const lecture = reactive({ data: null })
 
+	const loadingLectures = ref(false)
+
 	const getLectures = async () => {
+		loadingLectures.value = true
 		lectures.data = await APIClient.getAll()
+		loadingLectures.value = false
 	}
 
 	const addLecture = async (lecture) => {
@@ -36,5 +40,5 @@ export const useLectureStore = defineStore('lecture', () => {
 		getLectures()
 	}
 
-	return { lectures, lecture, getLectures, getLecture, resetLecture, addLecture, updateLecture, removeLecture }
+	return { lectures, lecture, getLectures, getLecture, resetLecture, addLecture, updateLecture, removeLecture, loadingLectures }
 })

@@ -1,4 +1,4 @@
-import { reactive } from 'vue'
+import { ref, reactive } from 'vue'
 import { defineStore } from 'pinia'
 
 import CollectionAPIClient from '@/API/CollectionAPIClient'
@@ -9,8 +9,12 @@ export const useCollectionStore = defineStore('collection', () => {
 	const items = reactive({ data: [] })
 	const item = reactive({ data: null })
 
+	const loadingItems = ref(false)
+
 	const getItems = async () => {
+		loadingItems.value = true
 		items.data = await APIClient.getAll()
+		loadingItems.value = false
 	}
 
 	const addItem = async (item) => {
@@ -36,5 +40,5 @@ export const useCollectionStore = defineStore('collection', () => {
 		getItems()
 	}
 
-	return { items, item, getItems, getItem, resetItem, addItem, updateItem, removeItem }
+	return { items, item, getItems, getItem, resetItem, addItem, updateItem, removeItem, loadingItems }
 })

@@ -5,13 +5,14 @@
 	import MultiSelect from 'primevue/multiselect'
 	import InputGroup from 'primevue/inputgroup'
 	import InputGroupAddon from 'primevue/inputgroupaddon'
+	import Skeleton from 'primevue/skeleton'
 	import { useCollectionStore } from '@/stores/collection'
 	import CollectionItem from '@/components/CollectionItem.vue'
 	import { categoriesModel } from '@/utils/models'
 
 	const emit = defineEmits(['addItem'])
 
-	const { items } = useCollectionStore()
+	const store = useCollectionStore()
 
 	const categories = ref(categoriesModel)
 
@@ -19,7 +20,7 @@
 	const categoryFilter = ref([])
 
 	const filteredItems = computed(() => {
-		let filteredItems = items.data
+		let filteredItems = store.items.data
 		if (nameFilter.value) {
 			filteredItems = filteredItems.filter(item => item.name.search(nameFilter.value) >= 0)
 		}
@@ -57,15 +58,20 @@
 			</div>
 			<Button label="Incluir" icon="pi pi-plus" outlined @click="emit('addItem')" class="shrink-0" />
 		</div>
-		<div class="grid grid-cols-6 gap-4">
-			<CollectionItem
-				v-for="item in filteredItems"
-				:key="item.id"
-				:id="item.id"
-				:name="item.name"
-				:category="item.category.name"
-				:img="item.img"
-			/>
-		</div>
+		<Transition name="fadeIn" mode="out-in">
+			<div v-if="store.loadingItems" class="grid grid-cols-6 gap-4">
+				<Skeleton v-for="i in 6" borderRadius="12px" height="370px" />
+			</div>
+			<div v-else class="grid grid-cols-6 gap-4">
+				<CollectionItem
+					v-for="item in filteredItems"
+					:key="item.id"
+					:id="item.id"
+					:name="item.name"
+					:category="item.category.name"
+					:img="item.img"
+				/>
+			</div>
+		</Transition>
 	</div>
 </template>

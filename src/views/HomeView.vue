@@ -41,7 +41,7 @@
 				<Card class="HomeView-cardLink">
 					<template #title>
 						<div class="flex justify-between">
-							<div class="flex items-center gap-2">
+							<div class="flex items-center gap-3">
 								<span class="HomeView-icon" :class="item.icon"/>
 								{{ item.label }}
 							</div>

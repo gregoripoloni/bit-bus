@@ -76,7 +76,7 @@ import InputNumber from 'primevue/inputnumber';
 						<InputNumber :minFractionDigits="2" :maxFractionDigits="2" class="col-span-2" v-model="ammount"/>
 					</div>
 					<div class="flex flex-col gap-2">
-						<label>Data da visita</label>
+						<label>Data da doação</label>
 						<Calendar v-model="donationDate" dateFormat="dd/mm/yy"/>
 					</div>
 				</div>

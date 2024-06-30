@@ -24,6 +24,7 @@
 
 	onMounted(async () => {
 		 visit.value = await visitsApiClient.getById(id.value);
+		 visit.value.period = (new Date(visit.value.period)).toLocaleDateString();
 	});
 
 	const submit = async () => {
@@ -58,6 +59,8 @@
 
 			name.value = '';
 			email.value = '';
+			comment.value = '';
+			link.value = '';
 		} catch (e) {
 			toast.add({ severity: 'error', summary: e, life: 5000 });
 		}

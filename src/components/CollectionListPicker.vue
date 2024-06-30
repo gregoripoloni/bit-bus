@@ -43,7 +43,7 @@
 
 	const isSelected = (id) => {
 		if (!props.selectedItems) return false;
-
+debugger
 		return props.selectedItems.find((i) => i.id == id) != undefined;
 	}
 </script>

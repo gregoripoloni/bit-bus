@@ -38,12 +38,15 @@
 	let error = ref(new APIError());
 
 	const fillForm = async () => {
+		if (!props.id) {
+			return;
+		}
 		let result = await visitStore.getById(props.id);
 		place.value = result.place;
 		period.value = (new Date(result.period)).toLocaleDateString();
 		responsable.value = result.responsable;
 		visitors.value = result.visitors;
-		items.value = result.items;
+		items.value = result.items ?? [];
 	}
 
 	const resetForm = () => {
@@ -54,6 +57,7 @@
 	}
 
 	const updateItemList = (item) => {
+		debugger
 		if (items.value.find((i) => i.id == item.id)) {
 			items.value = items.value.filter((i) => i.id != item.id);
 		} else {
@@ -73,6 +77,7 @@
 
 		try {
 			let result;
+			debugger
 			let saveData = {
 				id: props.id,
 				place: place.value,

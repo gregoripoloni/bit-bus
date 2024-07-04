@@ -31,7 +31,7 @@
 	}
 
 	const formatDate = (period) => {
-		return (new Date(period)).toLocaleDateString()
+		return (new Date(period + " 12:00:00")).toLocaleDateString()
 	}
 
 	const editItem = (id) => {

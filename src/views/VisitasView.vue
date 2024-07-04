@@ -42,7 +42,7 @@
 	}
 
 	const search = async () => {
-		let date = period.value?.toLocaleDateString();
+		let date = period.value?.toISOString().split('T')[0];
 
 		try {
 			isLoading.value = true;
@@ -106,5 +106,5 @@
 				<p>Não encontramos nenhum resultado resultado, <br/>por favor busque com outros filtros</p>
 			</div>
 		</div>
-		<VisitForm v-model:visible="visible" :id="null" @submitItem="" />
+		<VisitForm v-model:visible="visible" @update:visible="search()" :id="null" @submitItem="" />
 </template>

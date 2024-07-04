@@ -57,7 +57,6 @@
 	}
 
 	const updateItemList = (item) => {
-		debugger
 		if (items.value.find((i) => i.id == item.id)) {
 			items.value = items.value.filter((i) => i.id != item.id);
 		} else {
@@ -77,7 +76,6 @@
 
 		try {
 			let result;
-			debugger
 			let saveData = {
 				id: props.id,
 				place: place.value,
@@ -102,7 +100,6 @@
 			toast.add({ severity: 'success', summary: 'Sua visita foi salva com sucesso', life: 5000 });
 			emit('update:visible', false);
 		} catch (e) {
-			debugger
 			error.value = e;
 			toast.add({ severity: 'error', summary: 'Não foi possível salvar a sua visita', detail: 'Por favor, verifique os campos ressaltados em vermelhor', life: 5000 });
 		}

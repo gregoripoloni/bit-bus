@@ -1,7 +1,7 @@
 <script setup>
 	import Card from 'primevue/card'
 	import Checkbox from 'primevue/checkbox'
-	import { onMounted, onUpdated, ref } from 'vue';
+	import { computed, onMounted, onUpdated, ref } from 'vue';
 
 	const props = defineProps({
 		id: String,
@@ -12,17 +12,17 @@
 		item: Object
 	});
 
-	const selectedModel = ref(props.selected);
+	const selectedModel = computed({
+		get() {
+			return props.selected
+		},
+		set(newValue) {
+			emit('setItem', props.item)
+		}
+	});
+
 
 	const emit = defineEmits(['setItem']);
-
-	const setItem = () => {
-		emit('setItem', props.item);
-	}
-
-	onUpdated(() => {
-		selectedModel.value = props.selected
-	});
 </script>
 
 <template>
@@ -37,7 +37,7 @@
 		<template #footer>
 			<div class="flex mt-1 w-100 justify-between">
 				<div class="justify-self-end self-center">
-					<Checkbox @click="setItem()" v-model="selectedModel" binary/>
+					<Checkbox v-model="selectedModel" binary/>
 				</div>
 			</div>
 		</template>
